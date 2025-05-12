@@ -1,0 +1,151 @@
+.sustain {
+  padding: 80px 5%;
+  background-color: #fff;
+}
+
+.sustain-text {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.sustain-content {
+  grid-column: 1 / 2;
+}
+
+.sustain-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  position: relative;
+  color: #333;
+  display: block;
+}
+
+.sustain-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: #ff4646;
+}
+
+.sustain-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #666;
+  margin-top: 2rem;
+}
+
+.sustain-image {
+  grid-column: 2 / 3;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin-top: 2rem;
+}
+
+.sustain-list {
+  max-width: 1200px;
+  margin: 4rem auto 0;
+  padding: 0 5%;
+}
+
+.sustain-list-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 3rem;
+  position: relative;
+  color: #333;
+}
+
+.sustain-list-items {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 2.5rem;
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.sustain-list-items:hover {
+  transform: translateX(10px);
+}
+
+.bullet {
+  width: 80px;
+  height: 80px;
+  background-color: #ff4646;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  grid-row: 1 / span 2;
+}
+
+.sustain-list-items h2 {
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+  align-self: end;
+}
+
+.sustain-list-items p {
+  color: #666;
+  line-height: 1.6;
+  margin: 0.5rem 0 0;
+  font-size: 1.1rem;
+  grid-column: 2;
+}
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .sustain-text {
+    grid-template-columns: 1fr;
+  }
+
+  .sustain-content,
+  .sustain-image {
+    grid-column: 1 / -1;
+  }
+
+  .sustain-title {
+    font-size: 2rem;
+  }
+
+  .sustain-description {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  .sustain-list-title {
+    font-size: 2rem;
+  }
+
+  .bullet {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .sustain-list-items {
+    gap: 1rem;
+  }
+
+  .sustain-list-items h2 {
+    font-size: 1.25rem;
+  }
+
+  .sustain-list-items p {
+    font-size: 1rem;
+  }
+}
