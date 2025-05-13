@@ -16,7 +16,7 @@ export function Navbar() {
   }
 
   function handlesignup() {
-    navigate("/Signup");
+    navigate("/Login");
   }
 
   function handlehash(hash) {
