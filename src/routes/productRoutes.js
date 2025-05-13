@@ -13,37 +13,26 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get products by category - MOVED BEFORE THE ID ROUTE
-router.get('/category/men-sale', async (req, res) => {
+// Get products by category slug
+router.get('/category/:slug', async (req, res) => {
   try {
-    const products = await Product.find({ category: "Men Sale" });
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+    const categoryMap = {
+      'men-sale': 'Men Sale',
+      'diners-men-polo': 'Diners Men Polo',
+      'men-unstiched-fabric-sale': 'Men Unstitched Fabric Sale',
+      'diners-men-accessories': 'Diners Men Accessories',
+      'fragrance-women': 'Fragrance Women',
+      'women-sale': 'Women Sale',
+      'sale-women': 'Sale Women'
+    };
 
-router.get('/category/diners-men-polo', async (req, res) => {
-  try {
-    const products = await Product.find({ category: "Diners Men Polo" });
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+    const categoryName = categoryMap[req.params.slug];
 
-router.get('/category/men-unstiched-fabric-sale', async (req, res) => {
-  try {
-    const products = await Product.find({ category: "Men Unstitched Fabric Sale" });
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
+    if (!categoryName) {
+      return res.status(404).json({ message: 'Category not found' });
+    }
 
-router.get('/category/diners-men-accessories', async (req, res) => {
-  try {
-    const products = await Product.find({ category: "Diners Men Accessories" });
+    const products = await Product.find({ category: categoryName });
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
