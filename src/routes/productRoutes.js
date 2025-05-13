@@ -14,11 +14,36 @@ router.get('/', async (req, res) => {
 });
 
 // Get products by category - MOVED BEFORE THE ID ROUTE
-router.get('/category/:category', async (req, res) => {
+router.get('/category/men-sale', async (req, res) => {
   try {
-    // Create a case-insensitive regex for better matching
-    const categoryRegex = new RegExp(`^${req.params.category}$`, 'i');
-    const products = await Product.find({ category: categoryRegex });
+    const products = await Product.find({ category: "Men Sale" });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/category/diners-men-polo', async (req, res) => {
+  try {
+    const products = await Product.find({ category: "Diners Men Polo" });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/category/men-unstiched-fabric-sale', async (req, res) => {
+  try {
+    const products = await Product.find({ category: "Men Unstitched Fabric Sale" });
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get('/category/diners-men-accessories', async (req, res) => {
+  try {
+    const products = await Product.find({ category: "Diners Men Accessories" });
     res.json(products);
   } catch (error) {
     res.status(500).json({ message: error.message });
