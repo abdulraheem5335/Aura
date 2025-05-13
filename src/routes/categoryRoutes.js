@@ -13,7 +13,19 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get category by ID
+// Get categories by gender target (MOVED BEFORE THE ID ROUTE)
+router.get('/gender/:gender', async (req, res) => {
+  try {
+    // Create a case-insensitive regex for the gender parameter
+    const genderRegex = new RegExp(`^${req.params.gender}$`, 'i');
+    const categories = await Category.find({ gender_target: genderRegex });
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Get category by ID (NOW COMES AFTER THE SPECIFIC ROUTE)
 router.get('/:id', async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -21,16 +33,6 @@ router.get('/:id', async (req, res) => {
       return res.status(404).json({ message: 'Category not found' });
     }
     res.json(category);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
-
-// Get categories by gender target
-router.get('/gender/:gender', async (req, res) => {
-  try {
-    const categories = await Category.find({ gender_target: req.params.gender });
-    res.json(categories);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
