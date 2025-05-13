@@ -1,6 +1,9 @@
 import "../style/signup.css";
 import { Navbar } from "../components/Navbar";
+import { useState } from "react";
 export function SignUp() {
+  const [islog, setislog] = useState(false);
+
   return (
     <>
       <Navbar />
@@ -9,10 +12,18 @@ export function SignUp() {
         <h2>Welcome Back</h2>
         <input type="email" placeholder="Email Address" required />
         <input type="password" placeholder="password" required />
-        <label for="rem">Remember Me</label>
-        <input type="checkbox" id="rem" />
-        <a href="#">Forgot Password?</a>
-        <button type="submit">Sign In</button>
+        {islog ? (
+          <>
+            {" "}
+            <label for="rem">Remember Me</label>
+            <input type="checkbox" id="rem" />
+            <a href="#">Forgot Password?</a>{" "}
+          </>
+        ) : (
+          <input type="password" placeholder="confirm password" required />
+        )}
+
+        <button type="submit">{islog ? "Log In" : "Signup"}</button>
         <p>Or login with</p>
         <div className="social-links">
           <button className="facebook-btn">
