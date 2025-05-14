@@ -135,3 +135,4 @@ export function ProductDetails() {
     </>
   );
 }
+//everything is working fine
