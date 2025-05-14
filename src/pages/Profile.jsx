@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
-import { Navbar } from "../components/Navbar.jsx";
+import { useNavigate } from "react-router-dom";
+import { Navbar } from "../components/Navbar";
+import { ConfirmDialog } from "../components/ConfirmDialog";
 import "../style/profile.css";
 
 export function Profile() {
+  const navigate = useNavigate();
+  // State for confirm dialog
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   // State to store the user data
   const [user, setUser] = useState(null);
 
@@ -42,6 +48,24 @@ export function Profile() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Logout function
+  const handleLogout = () => {
+    setDialogOpen(true);
+  };
+
+  // Function to confirm logout
+  const confirmLogout = () => {
+    // Clear user data from localStorage
+    localStorage.removeItem("userId");
+    localStorage.setItem("LoggedIn", "false");
+    
+    // Close dialog
+    setDialogOpen(false);
+    
+    // Redirect to login
+    navigate("/Login");
   };
 
   // Fetch user data when component mounts
@@ -99,7 +123,7 @@ export function Profile() {
               </div>
 
               <div className="profile-section">
-                <h2 className="section-title">Address</h2>
+                <h2 className="section-title">Addresses</h2>
                 <div className="address-details">
                   <div className="info-item">
                     <span className="info-label">Street:</span>
@@ -137,6 +161,7 @@ export function Profile() {
             
             <div className="profile-actions">
               <button className="edit-button">Edit Profile</button>
+              <button className="logout-button" onClick={handleLogout}>Logout</button>
             </div>
           </div>
         )}
@@ -148,6 +173,15 @@ export function Profile() {
           </div>
         )}
       </div>
+
+      {/* Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={dialogOpen}
+        title="Confirm Logout"
+        message="Do you want to logout?"
+        onCancel={() => setDialogOpen(false)}
+        onConfirm={confirmLogout}
+      />
     </>
   );
 }

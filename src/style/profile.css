@@ -166,22 +166,37 @@
 .profile-actions {
   display: flex;
   justify-content: center;
+  gap: 20px;
   padding: 0 30px 30px;
 }
 
-.edit-button {
+.edit-button, .logout-button {
   padding: 12px 25px;
-  background-color: transparent;
-  border: 2px solid #ff4646;
-  color: #ff4646;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
   transition: all 0.3s ease;
 }
 
+.edit-button {
+  background-color: transparent;
+  border: 2px solid #ff4646;
+  color: #ff4646;
+}
+
 .edit-button:hover {
   background-color: #ff4646;
+  color: white;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: 2px solid #555;
+  color: #555;
+}
+
+.logout-button:hover {
+  background-color: #555;
   color: white;
 }
 

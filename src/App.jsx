@@ -8,6 +8,7 @@ import { MenCollection } from "./pages/Mencollection.jsx";
 import { WomenCollection } from "./pages/Womencollection.jsx";
 import { SignUp } from "./pages/Signup.jsx";
 import { CategoryView } from "./pages/CategoryView.jsx";
+import {Profile} from "./pages/Profile.jsx";
 function App() {
   return (
     <>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/Signup" element={<SignUp />} />
           <Route path="/Mencollection/:cname" element={<CategoryView />} />
           <Route path="/Womencollection/:cname" element={<CategoryView />} />
+          <Route path="/Profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </>
