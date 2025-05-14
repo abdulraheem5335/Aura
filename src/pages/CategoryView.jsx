@@ -27,18 +27,22 @@ export function CategoryView() {
   return (
     <>
       <Navbar />
-      <div className="productcontainer">
-        {product.map((Item, index) => {
-          return (
-            <div className="productcard" key={index}>
-              <img src={Item.images[1] || Item.images[0]} alt="product" />
-              <h3>{Item.title}</h3>
-
-              <p>Price: {Item.price_from}</p>
-              <button>Add to Cart</button>
+      <div className="category-container">
+        <h2 className="category-title">{cname}</h2>
+        <div className="product-grid">
+          {product.map((Item, index) => (
+            <div className="product-card" key={index}>
+              <div className="product-image">
+                <img src={Item.images[1] || Item.images[0]} alt={Item.title} />
+              </div>
+              <div className="product-info">
+                <h3>{Item.title}</h3>
+                <p className="price">Rs. {Item.price_from}</p>
+                <button className="add-to-cart">Add to Cart</button>
+              </div>
             </div>
-          );
-        })}
+          ))}
+        </div>
       </div>
     </>
   );
