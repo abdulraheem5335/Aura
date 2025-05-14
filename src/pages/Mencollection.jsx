@@ -10,19 +10,19 @@ export function MenCollection() {
   const Men = [
     {
       name: "diners-men-polo",
-      path: poloimg,
+      path: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/T-SHIRT-255X255.png?v=1692187597",
     },
     {
       name: "diners-men-accessories",
-      path: accimg,
+      path: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/accessories_9804a223-5cc7-441f-b48c-6cc6fdae8f1c.webp?v=1693997526",
     },
     {
       name: "men-unstiched-fabric-sale",
-      path: unsimg,
+      path: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/Shawl_1f3bc8e9-d4c5-4361-b2b7-528fe82ded31.png?v=1698645733",
     },
     {
       name: "men-sale",
-      path: saleimg,
+      path: "https://diners.com.pk/cdn/shop/files/Shirt-.Collection.jpg?v=1716287522",
     },
   ];
   const basepath = "/Mencollection/";

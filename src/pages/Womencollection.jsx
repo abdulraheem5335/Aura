@@ -10,15 +10,15 @@ export function WomenCollection() {
   const Women = [
     {
       name: "women-sale",
-      path: wsaleimg,
+      path: "https://diners.com.pk/cdn/shop/files/ready-to-wear_1_9b5658bb-26b8-41b4-a105-4563566c4f27.webp?v=1744794568",
     },
     {
       name: "sale-women",
-      path: imgw,
+      path: "https://diners.com.pk/cdn/shop/files/winter-min_1.png?v=1737631070",
     },
     {
       name: "fragrance-women",
-      path: fragimg,
+      path: "https://cdn.shopify.com/s/files/1/0752/0442/8072/files/1293c583-bf19-4abb-9f4b-b43e64a07aa7.webp?v=1688375780",
     },
   ];
 
