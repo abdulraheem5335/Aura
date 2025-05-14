@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Navbar } from "../components/Navbar";
 import { ConfirmDialog } from "../components/ConfirmDialog";
+import { Navbar } from "../components/Navbar";
 import "../style/profile.css";
 
 export function Profile() {
@@ -116,7 +116,8 @@ export function Profile() {
                   <div className="info-item">
                     <span className="info-label">Member Since:</span>
                     <span className="info-value">
-                      {user.created_at ? new Date(user.created_at).toLocaleDateString() : "N/A"}
+                                            {user.created_at ? new Date(user.created_at).toLocaleDateString() : "N/A"}
+
                     </span>
                   </div>
                 </div>

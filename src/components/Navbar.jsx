@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import "../style/nav.css";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 export function Navbar() {
   const [istoggle, setToggle] = useState(false);
   const [isslidebar, setSlidebar] = useState(false);
   const [isShowing, setIsShowing] = useState(false);
   const dropdownRef = useRef(null);
+  const { setIsCartOpen, cartItems } = useCart(); // <-- add cartItems here
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   let navigate = useNavigate();
 
   const handllecollection = () => {
@@ -93,9 +96,12 @@ export function Navbar() {
           <Link to="/" onClick={() => handlehash("#contact1")}>
             Contact
           </Link>
-          <button className="cart-btn" onClick={handlecart}>
+          <button className="cart-btn" onClick={() => setIsCartOpen(true)}>
             {" "}
             🛒
+            {cartCount > 0 && (
+          <span className="cart-counter">{cartCount}</span>
+        )}
           </button>
           <button onClick={handlelogin} className="user-btn">
             <i className="fa-solid fa-user"></i>
