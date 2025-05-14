@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { useParams, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
+import { useCart } from "../context/CartContext";
 import "../style/productDetails.css";
 
 export function ProductDetails() {
@@ -13,6 +14,7 @@ export function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeSection, setActiveSection] = useState(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     // If we already have product data from navigation state, use it
@@ -29,7 +31,7 @@ export function ProductDetails() {
         setLoading(true);
         console.log('Fetching product with ID:', id);
         const response = await fetch(`http://localhost:5000/api/products/category/${id}`);
-        
+
         if (!response.ok) {
           throw new Error('Product not found');
         }
@@ -89,8 +91,8 @@ export function ProductDetails() {
             {product.images
               .filter(img => img)
               .map((img, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className={`thumbnail ${selectedImage === img ? 'active' : ''}`}
                   onClick={() => setSelectedImage(img)}
                 >
@@ -99,12 +101,12 @@ export function ProductDetails() {
               ))}
           </div>
         </div>
-        
+
         <div className="product-info-details">
           <h1>{product.title}</h1>
           <p className="product-code">Product Code: {product.product_id}</p>
           <p className="product-price">Rs. {product.price_from}</p>
-          
+
           <div className="product-specs">
             <div className="spec-item">
               <span className="label">FIT</span>
@@ -141,16 +143,18 @@ export function ProductDetails() {
             </div>
           </div>
 
-          <button 
+          <button
             className="add-to-cart-btn"
             disabled={!selectedSize}
+            onClick={() => addToCart(product, selectedSize, quantity)}
+
           >
             Add to Cart
           </button>
 
           <div className="product-accordion">
             <div className="accordion-item">
-              <button 
+              <button
                 className={`accordion-header ${activeSection === 'details' ? 'active' : ''}`}
                 onClick={() => toggleSection('details')}
               >
@@ -162,30 +166,30 @@ export function ProductDetails() {
             </div>
 
             <div className="accordion-item">
-              <button 
+              <button
                 className={`accordion-header ${activeSection === 'delivery' ? 'active' : ''}`}
                 onClick={() => toggleSection('delivery')}
               >
                 DELIVERIES & RETURNS
               </button>
               <div className={`accordion-content ${activeSection === 'delivery' ? 'active' : ''}`}>
-                <p>Free delivery on orders above Rs. 2,500<br/>
-                   Standard delivery time: 3-5 working days<br/>
-                   Easy returns within 14 days</p>
+                <p>Free delivery on orders above Rs. 2,500<br />
+                  Standard delivery time: 3-5 working days<br />
+                  Easy returns within 14 days</p>
               </div>
             </div>
 
             <div className="accordion-item">
-              <button 
+              <button
                 className={`accordion-header ${activeSection === 'special' ? 'active' : ''}`}
                 onClick={() => toggleSection('special')}
               >
                 SPECIAL RETURN CONDITIONS
               </button>
               <div className={`accordion-content ${activeSection === 'special' ? 'active' : ''}`}>
-                <p>Items must be unused and in original packaging<br/>
-                   Tags must be attached<br/>
-                   All accessories must be included</p>
+                <p>Items must be unused and in original packaging<br />
+                  Tags must be attached<br />
+                  All accessories must be included</p>
               </div>
             </div>
           </div>

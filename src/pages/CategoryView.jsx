@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import "../style/categoryview.css";
 
@@ -23,12 +23,9 @@ export function CategoryView() {
 
   useEffect(() => {
     getdata();
-    console.log("Current products:", product); // Debug log
-  }, []);
+  }, [cname]);
 
   const handleProductClick = (Item) => {
-    console.log("Selected product:", Item);
-    // Navigate with state containing full product data
     navigate(`/product/${Item._id}`, { state: { productData: Item } });
   };
 

@@ -8,6 +8,7 @@ import { ProductDetails } from "./pages/ProductDetails.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { SignUp } from "./pages/Signup.jsx";
 import { WomenCollection } from "./pages/Womencollection.jsx";
+import { CartSidebar } from "./components/CartSidebar";
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </BrowserRouter>
+            <CartSidebar />
       <Footer />
+      
     </>
   );
 }
