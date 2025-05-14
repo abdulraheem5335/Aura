@@ -1,5 +1,5 @@
 import express from 'express';
-import Order from '../models/order.js';
+import Order from '../models/Order.js';
 
 const router = express.Router();
 
@@ -39,23 +39,58 @@ router.get('/user/:userId', async (req, res) => {
 // Create a new order
 router.post('/', async (req, res) => {
   try {
+    // Validate required fields
+    const {
+      customer_name,
+      customer_email,
+      customer_phone,
+      shipping_address,
+      items,
+      total_amount,
+      payment_method,
+      user // optional
+    } = req.body;
+
+    if (
+      !customer_name ||
+      !customer_email ||
+      !customer_phone ||
+      !shipping_address ||
+      !items ||
+      !Array.isArray(items) ||
+      items.length === 0 ||
+      !total_amount ||
+      !payment_method
+    ) {
+      return res.status(400).json({ message: "Missing required order fields" });
+    }
+
     // Generate a unique order number (e.g., ORD-YYYYMMDD-XXXX)
     const date = new Date();
     const dateStr = date.getFullYear().toString() +
                    (date.getMonth() + 1).toString().padStart(2, '0') +
                    date.getDate().toString().padStart(2, '0');
-    
     const randomPart = Math.floor(1000 + Math.random() * 9000);
     const orderNumber = `ORD-${dateStr}-${randomPart}`;
-    
-    const order = new Order({
-      ...req.body,
-      order_number: orderNumber
-    });
-    
+
+    const orderData = {
+      order_number: orderNumber,
+      items,
+      total_amount,
+      shipping_address,
+      payment_method,
+      ...(user ? { user } : {}),
+      customer_name,
+      customer_email,
+      customer_phone
+    };
+
+    const order = new Order(orderData);
+
     const savedOrder = await order.save();
     res.status(201).json(savedOrder);
   } catch (error) {
+    console.error("Order creation error:", error); // Add this line
     res.status(400).json({ message: error.message });
   }
 });

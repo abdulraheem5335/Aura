@@ -33,8 +33,10 @@ export function CartProvider({ children }) {
     );
   };
 
+  const clearCart = () => setCartItems([]);
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, isCartOpen, setIsCartOpen }}>
+    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, clearCart, isCartOpen, setIsCartOpen }}>
       {children}
     </CartContext.Provider>
   );

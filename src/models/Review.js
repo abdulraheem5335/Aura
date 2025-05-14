@@ -8,7 +8,7 @@ const reviewSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false // Allow guest reviews if needed
   },
   rating: {
     type: Number,
