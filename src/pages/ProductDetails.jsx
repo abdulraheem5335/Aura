@@ -12,6 +12,7 @@ export function ProductDetails() {
   const [selectedImage, setSelectedImage] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [activeSection, setActiveSection] = useState(null);
 
   useEffect(() => {
     // If we already have product data from navigation state, use it
@@ -47,6 +48,10 @@ export function ProductDetails() {
 
     fetchProduct();
   }, [id, location.state]);
+
+  const toggleSection = (section) => {
+    setActiveSection(activeSection === section ? null : section);
+  };
 
   if (loading) {
     return (
@@ -97,8 +102,20 @@ export function ProductDetails() {
         
         <div className="product-info-details">
           <h1>{product.title}</h1>
+          <p className="product-code">Product Code: {product.product_id}</p>
           <p className="product-price">Rs. {product.price_from}</p>
           
+          <div className="product-specs">
+            <div className="spec-item">
+              <span className="label">FIT</span>
+              <span className="value">Regular Fit</span>
+            </div>
+            <div className="spec-item">
+              <span className="label">GENDER</span>
+              <span className="value">{product.category.includes('Men') ? 'MEN' : 'WOMEN'}</span>
+            </div>
+          </div>
+
           <div className="size-selection">
             <h3>Select Size</h3>
             <div className="size-options">
@@ -130,6 +147,48 @@ export function ProductDetails() {
           >
             Add to Cart
           </button>
+
+          <div className="product-accordion">
+            <div className="accordion-item">
+              <button 
+                className={`accordion-header ${activeSection === 'details' ? 'active' : ''}`}
+                onClick={() => toggleSection('details')}
+              >
+                PRODUCT DETAILS & COMPOSITION
+              </button>
+              <div className={`accordion-content ${activeSection === 'details' ? 'active' : ''}`}>
+                <p>{product.description || "This product features premium quality material and craftsmanship."}</p>
+              </div>
+            </div>
+
+            <div className="accordion-item">
+              <button 
+                className={`accordion-header ${activeSection === 'delivery' ? 'active' : ''}`}
+                onClick={() => toggleSection('delivery')}
+              >
+                DELIVERIES & RETURNS
+              </button>
+              <div className={`accordion-content ${activeSection === 'delivery' ? 'active' : ''}`}>
+                <p>Free delivery on orders above Rs. 2,500<br/>
+                   Standard delivery time: 3-5 working days<br/>
+                   Easy returns within 14 days</p>
+              </div>
+            </div>
+
+            <div className="accordion-item">
+              <button 
+                className={`accordion-header ${activeSection === 'special' ? 'active' : ''}`}
+                onClick={() => toggleSection('special')}
+              >
+                SPECIAL RETURN CONDITIONS
+              </button>
+              <div className={`accordion-content ${activeSection === 'special' ? 'active' : ''}`}>
+                <p>Items must be unused and in original packaging<br/>
+                   Tags must be attached<br/>
+                   All accessories must be included</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

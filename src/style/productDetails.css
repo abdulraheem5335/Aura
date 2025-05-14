@@ -2,7 +2,7 @@
   display: flex;
   padding: 2rem 5%;
   gap: 4rem;
-  margin-top: 2rem;
+  margin-top: 100px;
 }
 
 .product-gallery {
@@ -56,6 +56,11 @@
   color: #333;
 }
 
+.product-code {
+  color: #666;
+  margin: 0.5rem 0;
+}
+
 .product-price {
   font-size: 1.5rem;
   color: #ff4444;
@@ -99,6 +104,70 @@
   border: 1px solid #ddd;
   background: white;
   cursor: pointer;
+}
+
+.product-specs {
+  margin: 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.spec-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.spec-item .label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.spec-item .value {
+  font-weight: bold;
+}
+
+.product-accordion {
+  margin-top: 2rem;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 1rem 0;
+  text-align: left;
+  background: none;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordion-header::after {
+  content: '+';
+  font-size: 1.2rem;
+}
+
+.accordion-header.active::after {
+  content: '-';
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  padding: 0 1rem;
+}
+
+.accordion-content.active {
+  max-height: 500px;
+  padding: 1rem;
 }
 
 .add-to-cart-btn {
