@@ -2,6 +2,7 @@ import "../style/signup.css";
 import { Navbar } from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SuccessPopup } from "../components/SuccessPopup";
 
 export function SignUp() {
   const [formData, setFormData] = useState({
@@ -23,6 +24,7 @@ export function SignUp() {
     special: false
   });
 
+  const [showPopup, setShowPopup] = useState(false);
   const navigate = useNavigate();
 
   const validatePassword = (password) => {
@@ -53,10 +55,9 @@ export function SignUp() {
       alert("Passwords don't match!");
       return;
     }
-    
-    // Create user object with only the required fields
+
     const newUser = {
-      name: `${formData.firstName} ${formData.lastName}`, // Combine first and last name
+      name: `${formData.firstName} ${formData.lastName}`,
       email: formData.email,
       password: formData.password
     };
@@ -77,14 +78,17 @@ export function SignUp() {
       }
       
       console.log('User registered successfully:', data);
-      alert('Registration successful!');
-      // Redirect to login page
-      navigate('/login');
+      setShowPopup(true); // Show popup instead of alert
       
     } catch (error) {
       console.error('Registration error:', error);
       alert(error.message);
     }
+  };
+
+  const handlePopupClose = () => {
+    setShowPopup(false);
+    navigate('/login');
   };
 
   return (
@@ -212,6 +216,11 @@ export function SignUp() {
           </form>
         </div>
       </section>
+      <SuccessPopup
+        isOpen={showPopup}
+        onClose={handlePopupClose}
+        message="Your account has been created successfully!"
+      />
     </>
   );
 }
