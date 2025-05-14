@@ -10,6 +10,7 @@ export function LogIn() {
     password: "",
     rememberMe: false,
   });
+  const [LoggedIn, setLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState('');
@@ -60,10 +61,12 @@ export function LogIn() {
 
       // Login successful
       localStorage.setItem("userId", user._id);
+      localStorage.setItem("LoggedIn", "true");
       if (formData.rememberMe) {
         localStorage.setItem("userEmail", formData.email);
       }
       
+      setLoggedIn(true);
       setIsError(false);
       setPopupMessage('Login successful!');
       setShowPopup(true);

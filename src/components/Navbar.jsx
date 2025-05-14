@@ -42,7 +42,12 @@ export function Navbar() {
   };
 
   const handlelogin = () => {
-    navigate("/Login");
+    const LoggedIn = localStorage.getItem("LoggedIn") === "true"; // check login state
+    if (LoggedIn) {
+      navigate("/Profile"); // redirect to profile if logged in
+    } else {
+      navigate("/Login"); // otherwise go to login page
+  }
   };
 
   const handlehash = (hash) => {
