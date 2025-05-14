@@ -1,13 +1,20 @@
 import { useCart } from "../context/CartContext";
 import "../style/cartSidebar.css";
+import { useNavigate } from "react-router-dom"; // Add this
 
 export function CartSidebar() {
   const { cartItems, isCartOpen, setIsCartOpen, removeFromCart } = useCart();
+  const navigate = useNavigate(); // Add this
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.product.price_from * item.quantity,
     0
   );
+
+   const handleCheckout = () => {
+    setIsCartOpen(false);
+    navigate("/checkout");
+  };
 
   return (
     <div className={`cart-sidebar${isCartOpen ? " open" : ""}`}>
@@ -35,7 +42,7 @@ export function CartSidebar() {
       )}
       <div className="cart-sidebar-footer">
         <div className="cart-total">Total: <span>Rs. {total}</span></div>
-        <button className="checkout-btn" disabled={cartItems.length === 0}>
+        <button className="checkout-btn" disabled={cartItems.length === 0} onClick={handleCheckout}>
           Proceed to Checkout
         </button>
       </div>

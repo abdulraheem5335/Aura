@@ -9,11 +9,12 @@ import { Profile } from "./pages/Profile.jsx";
 import { SignUp } from "./pages/Signup.jsx";
 import { WomenCollection } from "./pages/Womencollection.jsx";
 import { CartSidebar } from "./components/CartSidebar";
+import { Checkout } from "./pages/Checkout"; // Add this import
 
 function App() {
   return (
     <>
-      <BrowserRouter>
+      
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/Login" element={<LogIn />} />
@@ -24,8 +25,10 @@ function App() {
           <Route path="/Womencollection/:cname" element={<CategoryView />} />
           <Route path="/Profile" element={<Profile />} />
           <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/checkout" element={<Checkout />} /> {/* Add this */}
+
         </Routes>
-      </BrowserRouter>
+      
             <CartSidebar />
       <Footer />
       
