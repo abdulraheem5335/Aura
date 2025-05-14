@@ -20,6 +20,7 @@ export function Home() {
         linkone={"#collection"}
         linktwo={"#about1"}
       ></Hero>
+      
       <Collections />
       <About />
       <Sustain />
