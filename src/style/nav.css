@@ -184,3 +184,66 @@
 .user-btn:hover {
   color: #ff0000;
 }
+/* ...existing code... */
+
+.collection {  
+  position: absolute;
+  top: 100%;
+  background: rgb(0, 0, 0);
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.collection.showing {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.collection li {
+  margin: 0.5rem 0;
+  position: relative;
+  padding: 0.5rem;
+}
+
+.collection li a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Add styles for the dropdown button */
+.btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn:hover {
+  opacity: 0.8;
+}
+.collection li::before {
+  content: '';
+  position: absolute;
+  left: -10px;
+  top: 0;
+  width: 3px;
+  height: 100%;
+  background-color: #ff0000;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+.collection li:hover::before {
+  transform: scaleY(1);
+}
+.collection li a:hover {
+  color: #ff0000; /* Changed to red */
+}
