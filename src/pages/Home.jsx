@@ -7,7 +7,7 @@ import { Navbar } from "../components/Navbar.jsx";
 import path from "../assets/hero1.jpg";
 export function Home() {
   return (
-    <div>
+    <div style={{ overflow: "hidden", width: "100%" }}>
       <Navbar />
       <Hero
         back={path}
