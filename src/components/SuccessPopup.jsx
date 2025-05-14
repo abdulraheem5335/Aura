@@ -1,18 +1,18 @@
 import React from 'react';
 import '../style/SuccessPopup.css';
 
-export function SuccessPopup({ isOpen, onClose, message }) {
+export function SuccessPopup({ isOpen, onClose, message, isError = false }) {
   if (!isOpen) return null;
 
   return (
     <div className="popup-overlay">
-      <div className="popup-content">
-        <div className="success-icon">
-          <i className="fas fa-check-circle"></i>
+      <div className={`popup-content ${isError ? 'error' : 'success'}`}>
+        <div className="popup-icon">
+          <i className={`fas ${isError ? 'fa-exclamation-circle' : 'fa-check-circle'}`}></i>
         </div>
-        <h2>Success!</h2>
+        <h2>{isError ? 'Error' : 'Success'}</h2>
         <p>{message}</p>
-        <button className="popup-button" onClick={onClose}>
+        <button className={`popup-button ${isError ? 'error' : ''}`} onClick={onClose}>
           OK
         </button>
       </div>

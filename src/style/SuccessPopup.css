@@ -53,6 +53,18 @@
   background: #ff3333;
 }
 
+.popup-content.error .popup-icon {
+  color: #ff4444;
+}
+
+.popup-button.error {
+  background: #ff4444;
+}
+
+.popup-button.error:hover {
+  background: #ff3333;
+}
+
 @keyframes popupIn {
   from {
     opacity: 0;
