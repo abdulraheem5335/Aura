@@ -5,6 +5,10 @@ import { Category } from "../components/Category";
 export function MenCollection() {
   const Men = [
     {
+      name: "diners-men-polo",
+      path: "",
+    },
+    {
       name: "diners-men-accessories",
       path: "",
     },
