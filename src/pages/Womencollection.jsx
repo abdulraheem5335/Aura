@@ -2,20 +2,23 @@ import { Navbar } from "../components/Navbar.jsx";
 import { Hero } from "../components/Hero.jsx";
 import path from "../assets/wocolback.webp";
 import { Category } from "../components/Category.jsx";
+import wsaleimg from "../assets/wsale.webp";
+import imgw from "../assets/salew.webp";
+import fragimg from "../assets/frag.webp";
 export function WomenCollection() {
   const basepath = "/Womencollection/";
   const Women = [
     {
       name: "women-sale",
-      path: "",
+      path: wsaleimg,
     },
     {
       name: "sale-women",
-      path: "",
+      path: imgw,
     },
     {
       name: "fragrance-women",
-      path: "",
+      path: fragimg,
     },
   ];
 

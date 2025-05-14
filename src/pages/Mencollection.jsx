@@ -2,23 +2,27 @@ import { Navbar } from "../components/Navbar";
 import { Hero } from "../components/Hero";
 import path from "../assets/mencollback.webp";
 import { Category } from "../components/Category";
+import poloimg from "../assets/polo1.webp";
+import accimg from "../assets/acc.webp";
+import unsimg from "../assets/unstitch.webp";
+import saleimg from "../assets/sale.jpeg";
 export function MenCollection() {
   const Men = [
     {
       name: "diners-men-polo",
-      path: "",
+      path: poloimg,
     },
     {
       name: "diners-men-accessories",
-      path: "",
+      path: accimg,
     },
     {
       name: "men-unstiched-fabric-sale",
-      path: "",
+      path: unsimg,
     },
     {
       name: "men-sale",
-      path: "",
+      path: saleimg,
     },
   ];
   const basepath = "/Mencollection/";
