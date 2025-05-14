@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import cors from "cors";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import productRoutes from "./src/routes/productRoutes.js";
 import userRoutes from "./src/routes/userRoutes.js";
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // MongoDB connection
 mongoose

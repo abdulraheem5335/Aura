@@ -1,6 +1,7 @@
 import "../style/signup.css";
 import { Navbar } from "../components/Navbar";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function SignUp() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,8 @@ export function SignUp() {
     number: false,
     special: false
   });
+
+  const navigate = useNavigate();
 
   const validatePassword = (password) => {
     setPasswordRequirements({
@@ -44,26 +47,44 @@ export function SignUp() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
     
-    // Create user object similar to the JavaScript version
+    // Create user object with only the required fields
     const newUser = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+      name: `${formData.firstName} ${formData.lastName}`, // Combine first and last name
       email: formData.email,
-      phone: formData.phone,
-      password: formData.password,
-      newsletter: formData.newsletter,
-      dateJoined: new Date().toISOString()
+      password: formData.password
     };
 
-    console.log('User registered:', newUser);
-    // Add your registration logic here
+    try {
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed');
+      }
+      
+      console.log('User registered successfully:', data);
+      alert('Registration successful!');
+      // Redirect to login page
+      navigate('/login');
+      
+    } catch (error) {
+      console.error('Registration error:', error);
+      alert(error.message);
+    }
   };
 
   return (
@@ -74,8 +95,6 @@ export function SignUp() {
           <div className="signup-logo">
             <h1>AURA</h1>
           </div>
-          <h3>Create an Account</h3>
-          
           <form className="signup-form" onSubmit={handleSubmit}>
             <div className="row">
               <div className="col-md-6">
@@ -99,7 +118,6 @@ export function SignUp() {
                 />
               </div>
             </div>
-
             <input
               type="email"
               name="email"
@@ -108,7 +126,6 @@ export function SignUp() {
               onChange={handleChange}
               required
             />
-
             <input
               type="tel"
               name="phone"
@@ -116,7 +133,6 @@ export function SignUp() {
               value={formData.phone}
               onChange={handleChange}
             />
-
             <input
               type="password"
               name="password"
@@ -125,7 +141,6 @@ export function SignUp() {
               onChange={handleChange}
               required
             />
-
             <div className="password-requirements">
               <div className={`requirement ${passwordRequirements.length ? 'met' : ''}`}>
                 <i className="fa fa-circle"></i> 8+ characters
@@ -143,7 +158,6 @@ export function SignUp() {
                 <i className="fa fa-circle"></i> At least one special character
               </div>
             </div>
-
             <input
               type="password"
               name="confirmPassword"
@@ -152,7 +166,6 @@ export function SignUp() {
               onChange={handleChange}
               required
             />
-
             <div className="form-check">
               <input
                 type="checkbox"
@@ -166,7 +179,6 @@ export function SignUp() {
                 I agree to the <a href="#">Terms & Conditions</a> and <a href="#">Privacy Policy</a>
               </label>
             </div>
-
             <div className="form-check">
               <input
                 type="checkbox"
@@ -179,9 +191,7 @@ export function SignUp() {
                 Subscribe to our newsletter for updates
               </label>
             </div>
-
             <button type="submit">Create Account</button>
-
             <p>Or sign up with</p>
             <div className="social-links-signup">
               <button type="button" className="facebook-btn">
@@ -194,7 +204,6 @@ export function SignUp() {
                 <i className="fa-brands fa-x-twitter"></i>
               </button>
             </div>
-
             <div className="signup-footer">
               <p>
                 Already have an account? <a href="/login">Log In</a>
