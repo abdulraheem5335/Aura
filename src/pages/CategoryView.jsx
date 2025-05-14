@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import "../style/categoryview.css";
 
 export function CategoryView() {
   const { cname } = useParams();
+  const navigate = useNavigate();
   const [product, setproduct] = useState([]);
 
   async function getdata() {
@@ -22,7 +23,14 @@ export function CategoryView() {
 
   useEffect(() => {
     getdata();
+    console.log("Current products:", product); // Debug log
   }, []);
+
+  const handleProductClick = (Item) => {
+    console.log("Selected product:", Item);
+    // Navigate with state containing full product data
+    navigate(`/product/${Item._id}`, { state: { productData: Item } });
+  };
 
   return (
     <>
@@ -38,7 +46,12 @@ export function CategoryView() {
               <div className="product-info">
                 <h3>{Item.title}</h3>
                 <p className="price">Rs. {Item.price_from}</p>
-                <button className="add-to-cart">Add to Cart</button>
+                <button
+                  className="add-to-cart"
+                  onClick={() => handleProductClick(Item)}
+                >
+                  View Details
+                </button>
               </div>
             </div>
           ))}
