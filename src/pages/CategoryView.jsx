@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import "../style/categoryview.css";
+
 export function CategoryView() {
   const { cname } = useParams();
   const [product, setproduct] = useState([]);
