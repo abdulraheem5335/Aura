@@ -1,12 +1,12 @@
 import express from 'express';
-import User from '../models/user.js';
+import User from '../models/User.js';
 
 const router = express.Router();
 
 // Get all users (admin route)
 router.get('/', async (req, res) => {
   try {
-    const users = await User.find({}).select('-password');
+    const users = await User.find({});
     res.json(users);
   } catch (error) {
     res.status(500).json({ message: error.message });
