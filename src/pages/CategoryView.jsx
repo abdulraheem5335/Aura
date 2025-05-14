@@ -14,7 +14,7 @@ export function CategoryView() {
         `http://localhost:5000/api/products/category/${cname}`
       );
       const data = await result.json();
-      setproduct(data.slice(0, 20));
+      setproduct(data.slice(0, 52));
       console.log(data[1]);
     } catch (err) {
       console.log(err);

@@ -157,7 +157,7 @@ export function ProductDetails() {
                 PRODUCT DETAILS & COMPOSITION
               </button>
               <div className={`accordion-content ${activeSection === 'details' ? 'active' : ''}`}>
-                <p>{product.description || "This product features premium quality material and craftsmanship."}</p>
+                <p>{product.description || "This garment is made from premium-quality fabric, offering a soft feel and exceptional durability. Designed with a modern silhouette and refined craftsmanship, it's a versatile piece that blends comfort with effortless style—perfect for any occasion."}</p>
               </div>
             </div>
 
