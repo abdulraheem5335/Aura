@@ -1,15 +1,13 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Footer } from "./components/Footer.jsx";
+import { CategoryView } from "./pages/CategoryView.jsx";
 import { Home } from "./pages/Home.jsx";
 import { LogIn } from "./pages/Login.jsx";
 import { MenCollection } from "./pages/Mencollection.jsx";
-import { WomenCollection } from "./pages/Womencollection.jsx";
-import { SignUp } from "./pages/Signup.jsx";
-import { CategoryView } from "./pages/CategoryView.jsx";
-import { Profile } from "./pages/Profile.jsx";
 import { ProductDetails } from "./pages/ProductDetails.jsx";
+import { Profile } from "./pages/Profile.jsx";
+import { SignUp } from "./pages/Signup.jsx";
+import { WomenCollection } from "./pages/Womencollection.jsx";
 
 function App() {
   return (
@@ -27,6 +25,7 @@ function App() {
           <Route path="/product/:id" element={<ProductDetails />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </>
   );
 }
