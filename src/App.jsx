@@ -19,6 +19,7 @@ function App() {
           <Route path="/Womencollection" element={<WomenCollection />} />
           <Route path="/Signup" element={<SignUp />} />
           <Route path="/Mencollection/:cname" element={<CategoryView />} />
+          <Route path="/Womencollection/:cname" element={<CategoryView />} />
         </Routes>
       </BrowserRouter>
     </>
