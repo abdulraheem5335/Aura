@@ -28,7 +28,7 @@ export function CartSidebar() {
         <ul className="cart-items-list">
           {cartItems.map((item, idx) => (
             <li key={idx} className="cart-item">
-              <img src={item.product.images[0]} alt={item.product.title} width={60} />
+              <img src={item.product.images[1]} alt={item.product.title} width={60} />
               <div className="cart-item-info">
                 <div className="cart-item-title">{item.product.title}</div>
                 <div className="cart-item-size">Size: {item.size}</div>
