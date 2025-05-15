@@ -30,13 +30,16 @@ export function AdminDashboard() {
         // Calculate total revenue
         const revenue = orders.reduce((sum, order) => sum + order.total_amount, 0);
         
+        const sortedOrders = orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+
         setStats({
           totalUsers: users.length,
           totalOrders: orders.length,
           totalProducts: products.length,
-          recentOrders: orders.slice(0, 5), // Get 5 most recent orders
+          recentOrders: sortedOrders.slice(0, 5), // Now this is the latest 5
           revenue
         });
+
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
       } finally {
@@ -110,7 +113,11 @@ export function AdminDashboard() {
               {stats.recentOrders.map(order => (
                 <tr key={order._id}>
                   <td>{order.order_number}</td>
-                  <td>{order.user.name || order.user}</td>
+                  <td>
+  {order.user && typeof order.user === "object"
+    ? order.user.name
+    : order.user || "Unknown"}
+</td>
                   <td>{new Date(order.created_at).toLocaleDateString()}</td>
                   <td>
                     <span className={`status-badge ${order.status}`}>

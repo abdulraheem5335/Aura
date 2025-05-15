@@ -200,8 +200,8 @@ export function AdminProducts() {
                 {products.map((product) => (
                   <tr key={product._id}>
                     <td>
-                      <img 
-                        src={product.images[0] || "https://via.placeholder.com/50"} 
+                      <img width={60}
+                        src={product.images[1] || "https://via.placeholder.com/50"} 
                         alt={product.title}
                         className="product-thumbnail"
                       />
