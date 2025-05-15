@@ -10,38 +10,38 @@ export function About() {
   const teamMembers = [
     {
       name: "Taimoor Safdar",
-      role: "Team Lead & Full Stack Developer",
+      role: "Front End Lead Developer and Schema Manager",
       description:
-        "Leads the technical direction and architecture of AURA. Specializes in full-stack development using MERN stack, managing both client and server-side implementations. Oversees database design, API development, and team coordination.",
+        "Leads the technical direction and architecture of AURA. Designed various important featurees and components of the website including the product details page and the sign up page. Responsible for the overall performance and optimization of the website. Also responsible for the data collection and the initial schema development of the Website ",
       image: taimoor,
     },
     {
       name: "Ahmad Raza",
       role: "Frontend Lead Developer",
       description:
-        "Drives the frontend architecture and user experience. Expert in React.js and modern frontend frameworks, focusing on creating responsive and performant user interfaces while ensuring code quality and best practices.",
+        "Drives the frontend architecture and user experience. Designed and built the cart sidebar and checkout page, ensuring a seamless and responsive design. Also responsible for the end fixes of the styles of the website",
       image: ahmad,
     },
     {
       name: "Meerab",
-      role: "UI/UX Designer",
+      role: "Frontend Developer and Linking Manager",
       description:
-        "Creates intuitive and engaging user experiences through thoughtful design. Specializes in user research, wireframing, and implementing modern design principles to enhance the platform's visual appeal and usability.",
+        "Creates intuitive and engaging user experiences through thoughtful design and development. Designed the Login Page, User Profile and the Overall Css handling of the Project. Also responsible for linking the website with the backend.",
       image: meerab,
     },
     {
       name: "Abdul Raheem",
-      role: "Frontend Developer",
+      role: "Backend Developer and Database Connection Manager ",
       description:
-        "Implements responsive user interfaces and interactive features. Focuses on React component development, state management, and ensuring cross-browser compatibility while maintaining clean, efficient code.",
+        "Responsible for the overall backend of the websie. Designed the API routes for overall website according to the need, Also responsible for the development and management of the Admin Dashboard. Also responsible for the overall database connection and management of the website.",
       image: raheem,
     },
     {
-      name: "Fifth Member",
-      role: "Full Stack Developer",
+      name: "Aqib Raza",
+      role: "Frontend Developer",
       description:
-        "Contributes to both frontend and backend development. Specializes in API integration, database management, and implementing secure authentication systems while ensuring optimal performance.",
-      image: "path/to/image.jpg", // Placeholder for fifth member's image
+        "Contributes to frontend and development. Contributed in the development of the initial structure of the website and is responsible for maintaining the codebase.",
+      image: "https://media.licdn.com/dms/image/v2/D4D03AQHyeX_DoAAtFA/profile-displayphoto-shrink_200_200/B4DZZoM4LSGgAY-/0/1745504931126?e=1752710400&v=beta&t=ncg2bb6PyrtseR9bHgauRtpYN3mTWnmSfCxJ7C0HzFY", // Placeholder for fifth member's image
     },
   ];
 
