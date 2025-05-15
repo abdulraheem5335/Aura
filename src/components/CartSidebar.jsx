@@ -1,5 +1,5 @@
 import { useCart } from "../context/CartContext";
-import "../style/cartSidebar.css";
+import '../style/CartSidebar.css';
 import { useNavigate } from "react-router-dom"; // Add this
 
 export function CartSidebar() {
