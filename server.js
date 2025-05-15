@@ -14,9 +14,22 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// CORS configuration
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:3000",
+      "https://your-vercel-app-name.vercel.app",
+      // Add your frontend domain if different
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  })
+);
+
 // Middleware
 app.use(express.json());
-app.use(cors());
 
 // MongoDB connection
 mongoose

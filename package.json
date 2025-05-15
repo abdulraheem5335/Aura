@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "nodemon server.js",
+    "build": "echo 'No build required'",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "nodemon server.js"
+    "start": "node server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -31,5 +31,8 @@
     "globals": "^16.0.0",
     "nodemon": "^3.1.9",
     "vite": "^6.3.1"
+  },
+  "engines": {
+    "node": ">=18.x"
   }
 }
