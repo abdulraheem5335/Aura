@@ -1,33 +1,54 @@
 import "../style/collections.css";
 import menimage from "../assets/men.webp";
 import womenimage from "../assets/women.webp";
+import accessories from "../assets/accessories.jpg";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 
 export function Collections() {
   const [slider, setslider] = useState(0);
 
-  function handleprev() {
-    setslider(() => (slider === 0 ? collections.length - 1 : slider - 1));
-  }
-  function handlenext() {
-    setslider(() => (slider === collections.length - 1 ? 0 : slider + 1));
-  }
-
-  let collections = [
+  const collections = [
     {
       id: 1,
       title: "Men's Collection",
       image: menimage,
-      link: "#",
+      link: "/Mencollection",
     },
     {
       id: 2,
       title: "Women's Collection",
       image: womenimage,
-      link: "#",
+      link: "/Womencollection",
+    },
+    {
+      id: 3,
+      title: "Accessories Collection",
+      image: accessories,
+      link: "/Accessories",
     },
   ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setslider((current) =>
+        current === collections.length - 1 ? 0 : current + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleNavigation = (direction) => {
+    setslider((current) => {
+      if (direction === "prev") {
+        return current === 0 ? collections.length - 1 : current - 1;
+      } else {
+        return current === collections.length - 1 ? 0 : current + 1;
+      }
+    });
+  };
 
   return (
     <section id="collection" className="collections">
@@ -45,14 +66,20 @@ export function Collections() {
         </p>
       </div>
       <div className="container">
-        <div className="prevdiv">
-          <button className="prev" onClick={handleprev}>
-            prev
+        <div className="slider-navigation">
+          <button
+            className="nav-btn prev"
+            onClick={() => handleNavigation("prev")}
+            aria-label="Previous slide"
+          >
+            <AiOutlineLeft size={24} />
           </button>
-        </div>
-        <div className="nextdiv">
-          <button className="next" onClick={handlenext}>
-            next
+          <button
+            className="nav-btn next"
+            onClick={() => handleNavigation("next")}
+            aria-label="Next slide"
+          >
+            <AiOutlineRight size={24} />
           </button>
         </div>
 
@@ -69,23 +96,25 @@ export function Collections() {
               alt={collection.title}
               className="collection-image"
             />
-            <h2 className="collection-heading">{collection.title} </h2>
+            <h2 className="collection-heading">{collection.title}</h2>
             <div className="collection-button">
-              <Link
-                to={
-                  slider === 0
-                    ? "/Mencollection"
-                    : slider === 1
-                    ? "/Womencollection"
-                    : "/Accessories"
-                }
-                className="viewlink"
-              >
-                View Collection{" "}
+              <Link to={collection.link} className="viewlink">
+                View Collection
               </Link>
             </div>
           </div>
         ))}
+
+        <div className="slider-dots">
+          {collections.map((_, index) => (
+            <button
+              key={index}
+              className={`dot ${index === slider ? "active" : ""}`}
+              onClick={() => setslider(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

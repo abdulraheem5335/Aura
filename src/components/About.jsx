@@ -1,10 +1,50 @@
+import "../style/about.css";
 import aura from "../assets/aura.jpg";
+import raheem from "../assets/raheem.jpg";
 import ahmad from "../assets/ahmad.jpg";
 import meerab from "../assets/meerab.jpg";
-import raheem from "../assets/raheem.jpg";
-import "../style/about.css";
+import taimoor from "../assets/taimoor.jpg";
+
 
 export function About() {
+  const teamMembers = [
+    {
+      name: "Taimoor Safdar",
+      role: "Team Lead & Full Stack Developer",
+      description:
+        "Leads the technical direction and architecture of AURA. Specializes in full-stack development using MERN stack, managing both client and server-side implementations. Oversees database design, API development, and team coordination.",
+      image: taimoor,
+    },
+    {
+      name: "Ahmad Raza",
+      role: "Frontend Lead Developer",
+      description:
+        "Drives the frontend architecture and user experience. Expert in React.js and modern frontend frameworks, focusing on creating responsive and performant user interfaces while ensuring code quality and best practices.",
+      image: ahmad,
+    },
+    {
+      name: "Meerab",
+      role: "UI/UX Designer",
+      description:
+        "Creates intuitive and engaging user experiences through thoughtful design. Specializes in user research, wireframing, and implementing modern design principles to enhance the platform's visual appeal and usability.",
+      image: meerab,
+    },
+    {
+      name: "Abdul Raheem",
+      role: "Frontend Developer",
+      description:
+        "Implements responsive user interfaces and interactive features. Focuses on React component development, state management, and ensuring cross-browser compatibility while maintaining clean, efficient code.",
+      image: raheem,
+    },
+    {
+      name: "Fifth Member",
+      role: "Full Stack Developer",
+      description:
+        "Contributes to both frontend and backend development. Specializes in API integration, database management, and implementing secure authentication systems while ensuring optimal performance.",
+      image: "path/to/image.jpg", // Placeholder for fifth member's image
+    },
+  ];
+
   return (
     <section className="about" id="about1">
       <div className="about-content">
@@ -32,21 +72,25 @@ export function About() {
         </div>
         <img src={aura} alt="About AURA" className="aura-image" />
       </div>
-      <div className="about-image-container">
-        <div className="team-member">
-          <img src={ahmad} alt="Ahmad Raza" className="about-image" />
-          <h2>Ahmad Raza</h2>
-          <p>Creative Director</p>
-        </div>
-        <div className="team-member">
-          <img src={meerab} alt="Meerab" className="about-image" />
-          <h2>Meerab</h2>
-          <p>Head of Design</p>
-        </div>
-        <div className="team-member">
-          <img src={raheem} alt="Abdur Raheem" className="about-image" />
-          <h2>Abdur Raheem</h2>
-          <p>Lead Developer</p>
+      
+      <div className="team-section">
+        <h1 className="team-title">Development Team</h1>
+        <div className="team-grid">
+          {teamMembers.map((member, index) => (
+            <div className="team-card" key={index}>
+              <div className="card-inner">
+                <div className="card-front">
+                  <img src={member.image} alt={member.name} />
+                  <h3>{member.name}</h3>
+                </div>
+                <div className="card-back">
+                  <h3>{member.name}</h3>
+                  <h4>{member.role}</h4>
+                  <p>{member.description}</p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
