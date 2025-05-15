@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { AdminLayout } from "../../components/admin/AdminLayout";
+import { PopupAlert } from "../../components/PopupAlert";
 import "../../style/admin/products.css";
 
 export function AdminProducts() {
@@ -17,6 +18,8 @@ export function AdminProducts() {
   });
   const [categories, setCategories] = useState([]);
   const [isNewProduct, setIsNewProduct] = useState(false);
+  const [popup, setPopup] = useState({ show: false, type: '', message: '', isConfirmation: false });
+  const [productToDelete, setProductToDelete] = useState(null);
   
   useEffect(() => {
     fetchProducts();
@@ -83,20 +86,46 @@ export function AdminProducts() {
     setShowModal(true);
   };
   
-  const handleDeleteProduct = async (productId) => {
-    if (!confirm("Are you sure you want to delete this product?")) return;
-    
+  const handleDeleteClick = (product) => {
+    setProductToDelete(product);
+    setPopup({
+      show: true,
+      type: 'error',
+      message: `Are you sure you want to delete "${product.title || 'this product'}"?`,
+      isConfirmation: true
+    });
+  };
+
+  const handleDeleteConfirm = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/products/${productId}`, {
-        method: "DELETE"
+      const response = await fetch(`http://localhost:5000/api/products/deleteById/${productToDelete._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
-      
-      if (response.ok) {
-        setProducts(products.filter(p => p._id !== productId));
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete product: ${response.status}`);
       }
+      
+      setProducts(prevProducts => prevProducts.filter(p => p._id !== productToDelete._id));
+      setPopup({
+        show: true,
+        type: 'success',
+        message: 'Product deleted successfully!',
+        isConfirmation: false
+      });
     } catch (error) {
       console.error("Error deleting product:", error);
+      setPopup({
+        show: true,
+        type: 'error',
+        message: 'Failed to delete product. Please try again.',
+        isConfirmation: false
+      });
     }
+    setProductToDelete(null);
   };
   
   const handleInputChange = (e) => {
@@ -236,7 +265,7 @@ export function AdminProducts() {
                       </button>
                       <button 
                         className="delete-btn" 
-                        onClick={() => handleDeleteProduct(product._id)}
+                        onClick={() => handleDeleteClick(product)}
                       >
                         Delete
                       </button>
@@ -408,6 +437,16 @@ export function AdminProducts() {
               </form>
             </div>
           </div>
+        )}
+        
+        {popup.show && (
+          <PopupAlert
+            type={popup.type}
+            message={popup.message}
+            isConfirmation={popup.isConfirmation}
+            onConfirm={handleDeleteConfirm}
+            onClose={() => setPopup({ show: false, type: '', message: '', isConfirmation: false })}
+          />
         )}
       </div>
     </AdminLayout>

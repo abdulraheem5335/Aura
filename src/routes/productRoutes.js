@@ -85,30 +85,17 @@ router.post("/", async (req, res) => {
   }
 });
 
-// Add a new route for cleaning up all product images in one go
-router.post('/cleanup-images', async (req, res) => {
+router.delete('/deleteById/:id', async (req, res) => {
   try {
-    const products = await Product.find({});
-    let updatedCount = 0;
-    
-    for (const product of products) {
-      const hasEmptyImages = product.images.some(img => img === '');
-      
-      if (hasEmptyImages) {
-        const filteredImages = product.images.filter(img => img !== '');
-        await Product.updateOne(
-          { _id: product._id },
-          { $set: { images: filteredImages } }
-        );
-        updatedCount++;
-      }
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found" });
     }
-    
-    res.json({ message: `Updated ${updatedCount} products`, success: true });
+    res.status(200).json({ message: "Product deleted successfully" });
   } catch (error) {
-    console.error('Error cleaning up images:', error);
-    res.status(500).json({ message: error.message, success: false });
+    res.status(500).json({ message: error.message });
   }
 });
+
 
 export default router;
