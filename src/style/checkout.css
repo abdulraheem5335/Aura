@@ -117,32 +117,24 @@
   background: #ff2222;
 }
 
+.error-message {
+  color: #ff4646;
+  background-color: #ffeaea;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.empty-cart-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px 0;
+}
+
 .checkout-btn:disabled {
-  background: #ffcdd2;
-  color: #fff;
+  background-color: #cccccc;
   cursor: not-allowed;
-}
-
-.checkout-error {
-  color: #ff4444;
-  background: #fff0f0;
-  border: 1px solid #ffcccc;
-  border-radius: 5px;
-  padding: 0.75rem 1rem;
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 1rem;
-}
-
-.checkout-success {
-  color: #388e3c;
-  background: #e8f5e9;
-  border: 1px solid #b2dfdb;
-  border-radius: 5px;
-  padding: 1rem 1.5rem;
-  margin-top: 1rem;
-  text-align: center;
-  font-size: 1.1rem;
 }
 
 @media (max-width: 900px) {

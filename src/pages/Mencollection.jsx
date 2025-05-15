@@ -27,7 +27,7 @@ export function MenCollection() {
   ];
   const basepath = "/Mencollection/";
   return (
-    <div style={{ overflow: "hidden", width: "100%" }}>
+    <>
       <Navbar />
       <Hero
         back={path}
@@ -41,6 +41,6 @@ export function MenCollection() {
         linktwo={"#"}
       ></Hero>
       <Category list={Men} basepath={basepath} />
-    </div>
+    </>
   );
 }

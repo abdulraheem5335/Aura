@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { Navbar } from "../components/Navbar";
+import { SuccessPopup } from "../components/SuccessPopup";
 import "../style/profile.css";
 
 export function Profile() {
@@ -15,6 +16,9 @@ export function Profile() {
   // Loading and error states for UI feedback
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // State for logout success message
+  const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 
   // Function to fetch user data using ID from localStorage
   const fetchUserData = async () => {
@@ -41,6 +45,12 @@ export function Profile() {
 
       // Set the found user
       setUser(foundUser);
+      
+      // If user is admin, redirect to admin dashboard
+      if (foundUser.role === 'admin') {
+        navigate('/admin');
+      }
+      
       setError(null);
     } catch (err) {
       setError(err.message);
@@ -64,8 +74,19 @@ export function Profile() {
     // Close dialog
     setDialogOpen(false);
     
+    // Show success message
+    setShowLogoutSuccess(true);
+  };
+
+  const handleLogoutSuccessClose = () => {
+    setShowLogoutSuccess(false);
     // Redirect to login
     navigate("/Login");
+  };
+
+  // Function to go to admin dashboard
+  const goToAdminDashboard = () => {
+    navigate('/admin');
   };
 
   // Fetch user data when component mounts
@@ -162,6 +183,11 @@ export function Profile() {
             
             <div className="profile-actions">
               <button className="edit-button">Edit Profile</button>
+              {user.role === 'admin' && (
+                <button className="admin-button" onClick={goToAdminDashboard}>
+                  Admin Dashboard
+                </button>
+              )}
               <button className="logout-button" onClick={handleLogout}>Logout</button>
             </div>
           </div>
@@ -183,6 +209,15 @@ export function Profile() {
         onCancel={() => setDialogOpen(false)}
         onConfirm={confirmLogout}
       />
+      
+      {/* Success popup for logout */}
+      {showLogoutSuccess && (
+        <SuccessPopup
+          message="You have been successfully logged out"
+          onClose={handleLogoutSuccessClose}
+          isOpen={showLogoutSuccess}
+        />
+      )}
     </>
   );
 }

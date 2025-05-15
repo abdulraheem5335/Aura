@@ -89,6 +89,11 @@ export function LogIn() {
 
   const handlePopupClose = () => {
     setShowPopup(false);
+    
+    // If login was successful, navigate to home after closing popup
+    if (LoggedIn && !isError) {
+      navigate("/");
+    }
   };
 
   function handlesignup(e) {
