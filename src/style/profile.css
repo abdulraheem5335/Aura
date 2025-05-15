@@ -170,7 +170,7 @@
   padding: 0 30px 30px;
 }
 
-.edit-button, .logout-button {
+.edit-button, .logout-button, .admin-button {
   padding: 12px 25px;
   border-radius: 4px;
   cursor: pointer;
@@ -187,6 +187,17 @@
 .edit-button:hover {
   background-color: #ff4646;
   color: white;
+}
+
+.admin-button {
+  background-color: #4285f4;
+  border: 2px solid #4285f4;
+  color: white;
+}
+
+.admin-button:hover {
+  background-color: #3367d6;
+  border-color: #3367d6;
 }
 
 .logout-button {

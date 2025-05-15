@@ -90,6 +90,7 @@
   font-size: 1rem;
   background: #fafafa;
   color: #111;
+  margin-bottom: 0.5rem;
 }
 
 .checkout-form input:focus {
@@ -114,6 +115,26 @@
 
 .checkout-btn:hover {
   background: #ff2222;
+}
+
+.error-message {
+  color: #ff4646;
+  background-color: #ffeaea;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.empty-cart-message {
+  text-align: center;
+  color: #666;
+  font-style: italic;
+  padding: 20px 0;
+}
+
+.checkout-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
 }
 
 @media (max-width: 900px) {

@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 const orderItemSchema = new mongoose.Schema({
   product_id: {
     type: String,
-    required: true
+    required: true // Should be required
   },
   title: {
     type: String, 
-    required: true
+    required: true // Should be required
   },
   size: {
     type: String,
@@ -30,12 +30,26 @@ const orderItemSchema = new mongoose.Schema({
 const orderSchema = new mongoose.Schema({
   order_number: {
     type: String,
-    required: true,
+    required: true, // Should be required
     unique: true
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
+    required: false,
+    default: null
+  },
+  // Add customer fields for guest checkout
+  customer_name: {
+    type: String,
+    required: true
+  },
+  customer_email: {
+    type: String,
+    required: true
+  },
+  customer_phone: {
+    type: String,
     required: true
   },
   items: [orderItemSchema],
@@ -46,7 +60,7 @@ const orderSchema = new mongoose.Schema({
   shipping_address: {
     street: String,
     city: String,
-    state: String,
+    state: { type: String, required: false },
     postal_code: String,
     country: String
   },
@@ -70,5 +84,5 @@ const orderSchema = new mongoose.Schema({
   }
 });
 
-const Order = mongoose.model('Order', orderSchema);
+const Order = mongoose.models.Order || mongoose.model('Order', orderSchema);
 export default Order;
