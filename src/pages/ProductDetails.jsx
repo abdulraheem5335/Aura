@@ -16,11 +16,20 @@ export function ProductDetails() {
   const [activeSection, setActiveSection] = useState(null);
   const { addToCart } = useCart();
 
+  // Helper function to get a valid product image
+  const getFirstValidImage = (product) => {
+    if (product && product.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    return "https://via.placeholder.com/600x800?text=No+Image";
+  };
+
   useEffect(() => {
     // If we already have product data from navigation state, use it
     if (location.state?.productData) {
-      setProduct(location.state.productData);
-      setSelectedImage(location.state.productData.images[1] || location.state.productData.images[0]);
+      const productData = location.state.productData;
+      setProduct(productData);
+      setSelectedImage(getFirstValidImage(productData));
       setLoading(false);
       return;
     }
@@ -39,7 +48,7 @@ export function ProductDetails() {
         const data = await response.json();
         console.log('Product data:', data);
         setProduct(data);
-        setSelectedImage(data.images[1] || data.images[0]);
+        setSelectedImage(getFirstValidImage(data));
       } catch (error) {
         console.error("Error:", error);
         setError(error.message);
@@ -85,12 +94,11 @@ export function ProductDetails() {
       <div className="product-details-container">
         <div className="product-gallery">
           <div className="main-image">
-            <img src={selectedImage} alt={product.title} />
+            <img src={selectedImage} alt={product?.title || "Product"} />
           </div>
           <div className="thumbnail-gallery">
-            {product.images
-              .filter(img => img)
-              .map((img, index) => (
+            {product?.images && product.images.length > 0 ? (
+              product.images.map((img, index) => (
                 <div
                   key={index}
                   className={`thumbnail ${selectedImage === img ? 'active' : ''}`}
@@ -98,7 +106,12 @@ export function ProductDetails() {
                 >
                   <img src={img} alt={`View ${index + 1}`} />
                 </div>
-              ))}
+              ))
+            ) : (
+              <div className="thumbnail active">
+                <img src="https://via.placeholder.com/80x80?text=No+Image" alt="No image available" />
+              </div>
+            )}
           </div>
         </div>
 
@@ -198,4 +211,3 @@ export function ProductDetails() {
     </>
   );
 }
-//everything is working fine

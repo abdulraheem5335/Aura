@@ -3,6 +3,16 @@ import Product from '../models/Product.js';
 
 const router = express.Router();
 
+// Add a helper middleware to clean up any accidentally empty image URLs
+router.use((req, res, next) => {
+  if (req.method === 'POST' || req.method === 'PUT') {
+    if (req.body.images && Array.isArray(req.body.images)) {
+      req.body.images = req.body.images.filter(img => img !== '');
+    }
+  }
+  next();
+});
+
 // Get all products
 router.get('/', async (req, res) => {
   try {
@@ -75,5 +85,30 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Add a new route for cleaning up all product images in one go
+router.post('/cleanup-images', async (req, res) => {
+  try {
+    const products = await Product.find({});
+    let updatedCount = 0;
+    
+    for (const product of products) {
+      const hasEmptyImages = product.images.some(img => img === '');
+      
+      if (hasEmptyImages) {
+        const filteredImages = product.images.filter(img => img !== '');
+        await Product.updateOne(
+          { _id: product._id },
+          { $set: { images: filteredImages } }
+        );
+        updatedCount++;
+      }
+    }
+    
+    res.json({ message: `Updated ${updatedCount} products`, success: true });
+  } catch (error) {
+    console.error('Error cleaning up images:', error);
+    res.status(500).json({ message: error.message, success: false });
+  }
+});
 
 export default router;

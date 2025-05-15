@@ -59,16 +59,26 @@ export function AdminProducts() {
     setShowModal(true);
   };
   
+  const getProductImage = (product) => {
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    return "https://dummyimage.com/50x50/cccccc/000000&text=No+Image";
+  };
+  
   const handleEditProduct = (product) => {
     setIsNewProduct(false);
     setEditingProduct(product);
+    
+    const validImages = (product.images || []).filter(img => img !== "");
+    
     setFormData({
       product_id: product.product_id,
-      title: product.title,
+      title: product.title || "",
       price_from: product.price_from,
       category: product.category,
       variants: [...product.variants],
-      images: [...product.images]
+      images: validImages.length > 0 ? [...validImages] : [""]
     });
     setShowModal(true);
   };
@@ -138,6 +148,11 @@ export function AdminProducts() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    const cleanedFormData = {
+      ...formData,
+      images: formData.images.filter(img => img.trim() !== "")
+    };
+    
     try {
       const url = isNewProduct
         ? "http://localhost:5000/api/products"
@@ -150,7 +165,7 @@ export function AdminProducts() {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(cleanedFormData)
       });
       
       if (response.ok) {
@@ -200,11 +215,12 @@ export function AdminProducts() {
                 {products.map((product) => (
                   <tr key={product._id}>
                     <td>
-                      <img width={60}
-  src={product.images[1] || "https://dummyimage.com/50x50/cccccc/000000&text=No+Image" }
-  alt={product.title}
-  className="product-thumbnail"
-/>
+                      <img 
+                        width={60}
+                        src={getProductImage(product)}
+                        alt={product.title || product.product_id}
+                        className="product-thumbnail"
+                      />
                     </td>
                     <td>{product.product_id}</td>
                     <td>{product.title}</td>

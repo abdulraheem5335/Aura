@@ -1,19 +1,27 @@
 import { useCart } from "../context/CartContext";
 import '../style/CartSidebar.css';
-import { useNavigate } from "react-router-dom"; // Add this
+import { useNavigate } from "react-router-dom";
 
 export function CartSidebar() {
   const { cartItems, isCartOpen, setIsCartOpen, removeFromCart } = useCart();
-  const navigate = useNavigate(); // Add this
+  const navigate = useNavigate();
 
   const total = cartItems.reduce(
     (sum, item) => sum + item.product.price_from * item.quantity,
     0
   );
 
-   const handleCheckout = () => {
+  const handleCheckout = () => {
     setIsCartOpen(false);
     navigate("/checkout");
+  };
+
+  // Helper function to safely get a valid image URL
+  const getProductImage = (product) => {
+    if (product.images && product.images.length > 0) {
+      return product.images[0];
+    }
+    return "https://via.placeholder.com/60x80?text=No+Image";
   };
 
   return (
@@ -28,7 +36,7 @@ export function CartSidebar() {
         <ul className="cart-items-list">
           {cartItems.map((item, idx) => (
             <li key={idx} className="cart-item">
-              <img src={item.product.images[1]} alt={item.product.title} width={60} />
+              <img src={getProductImage(item.product)} alt={item.product.title || "Product"} width={60} />
               <div className="cart-item-info">
                 <div className="cart-item-title">{item.product.title}</div>
                 <div className="cart-item-size">Size: {item.size}</div>

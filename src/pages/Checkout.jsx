@@ -44,15 +44,22 @@ export function Checkout() {
     setError("");
 
     try {
-      // Prepare order items from cart
-      const orderItems = cartItems.map(item => ({
-        product_id: item.product.product_id,
-        title: item.product.title,
-        size: item.size || "Default",
-        price: item.product.price_from,
-        quantity: item.quantity,
-        image: item.product.images && item.product.images.length > 0 ? item.product.images[0] : ""
-      }));
+      // Prepare order items from cart with safe image handling
+      const orderItems = cartItems.map(item => {
+        // Get the first valid image or empty string if none
+        const imageUrl = item.product.images && item.product.images.length > 0
+          ? item.product.images[0]
+          : "";
+          
+        return {
+          product_id: item.product.product_id,
+          title: item.product.title || `Product ${item.product.product_id}`,
+          size: item.size || "Default",
+          price: item.product.price_from,
+          quantity: item.quantity,
+          image: imageUrl
+        };
+      });
 
       // Create order data
       const orderData = {
