@@ -201,10 +201,10 @@ export function AdminProducts() {
                   <tr key={product._id}>
                     <td>
                       <img width={60}
-                        src={product.images[1] || "https://via.placeholder.com/50"} 
-                        alt={product.title}
-                        className="product-thumbnail"
-                      />
+  src={product.images[1] || "https://dummyimage.com/50x50/cccccc/000000&text=No+Image" }
+  alt={product.title}
+  className="product-thumbnail"
+/>
                     </td>
                     <td>{product.product_id}</td>
                     <td>{product.title}</td>
