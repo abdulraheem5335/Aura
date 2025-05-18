@@ -8,21 +8,21 @@ import userRoutes from "./src/routes/userRoutes.js";
 import cartRoutes from "./src/routes/cartRoutes.js";
 import orderRoutes from "./src/routes/orderRoutes.js";
 import reviewRoutes from "./src/routes/reviewRoutes.js";
+import path from "path";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CORS configuration
+// Update CORS configuration
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://your-vercel-app-name.vercel.app",
-      // Add your frontend domain if different
-    ],
+      "https://aura-store.vercel.app",
+    ], // Add your Vercel domain
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
@@ -49,6 +49,14 @@ app.use("/api/reviews", reviewRoutes);
 app.get("/", (req, res) => {
   res.send("Aura API is running");
 });
+
+// For Vercel deployment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("dist")); // Assuming your frontend build is in 'dist'
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+  });
+}
 
 // Error handling middleware
 app.use((err, req, res, next) => {
