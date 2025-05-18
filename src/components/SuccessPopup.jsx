@@ -1,7 +1,7 @@
 import "../style/successPopup.css";
 import { useEffect } from "react";
 
-export function SuccessPopup({ message, onClose, isOpen = true }) {
+export function SuccessPopup({ message, onClose, isOpen = true, isError = false }) {
   // Add ESC key handler for closing the popup
   useEffect(() => {
     const handleEscKey = (e) => {
@@ -26,12 +26,15 @@ export function SuccessPopup({ message, onClose, isOpen = true }) {
   if (!isOpen) return null;
 
   return (
-    <div className="popup-overlay" onClick={onClose}>
-      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        <div className="success-icon">✓</div>
-        <h2>Success!</h2>
-        <p>{message}</p>
-        <button className="popup-button" onClick={onClose}>Continue</button>
+    <div className="success-popup-overlay" onClick={onClose}>
+      <div 
+        className={`success-popup ${isError ? 'error' : 'success'}`}
+        onClick={e => e.stopPropagation()}
+      >
+        <p className="success-popup-message">{message}</p>
+        <button className="success-popup-close" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );
