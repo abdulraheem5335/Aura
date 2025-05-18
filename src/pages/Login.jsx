@@ -3,6 +3,7 @@ import { Navbar } from "../components/Navbar";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SuccessPopup } from "../components/SuccessPopup";
+import API_URL from '../config/api';
 
 export function LogIn() {
   const [formData, setFormData] = useState({
@@ -38,7 +39,7 @@ export function LogIn() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/users");
+      const response = await fetch(`${API_URL}/api/users`);
       const users = await response.json();
 
       const user = users.find(u => u.email.toLowerCase() === formData.email.toLowerCase());
