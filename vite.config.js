@@ -5,11 +5,10 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: 'dist',
-    rollupOptions: {
-      external: [], // Add external dependencies if needed
-      output: {
-        manualChunks: undefined,
-      },
+  },
+  define: {
+    'process.env': {
+      API_URL: JSON.stringify(process.env.API_URL || 'http://localhost:5000'),
     },
   },
 });
