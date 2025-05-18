@@ -1,4 +1,4 @@
-import "../style/successPopup.css";
+import "../style/SuccessPopup.css"; // Fix casing in import
 import { useEffect } from "react";
 
 export function SuccessPopup({ message, onClose, isOpen = true, isError = false }) {
