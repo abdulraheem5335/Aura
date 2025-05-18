@@ -1,4 +1,3 @@
-import "../style/SuccessPopup.css";
 
 export function SuccessPopup({ isOpen, message, onClose, isError = false }) {
   if (!isOpen) return null;
