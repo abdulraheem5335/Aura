@@ -1,28 +1,6 @@
-import "../style/SuccessPopup.css"; // Fix casing in import
-import { useEffect } from "react";
+import "../style/SuccessPopup.css";
 
-export function SuccessPopup({ message, onClose, isOpen = true, isError = false }) {
-  // Add ESC key handler for closing the popup
-  useEffect(() => {
-    const handleEscKey = (e) => {
-      if (e.key === "Escape" && isOpen) {
-        onClose();
-      }
-    };
-    
-    document.addEventListener("keydown", handleEscKey);
-    
-    // Auto-close after 5 seconds
-    const timer = setTimeout(() => {
-      if (isOpen) onClose();
-    }, 5000);
-    
-    return () => {
-      document.removeEventListener("keydown", handleEscKey);
-      clearTimeout(timer);
-    };
-  }, [isOpen, onClose]);
-
+export function SuccessPopup({ isOpen, message, onClose, isError = false }) {
   if (!isOpen) return null;
 
   return (
