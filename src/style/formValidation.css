@@ -1,0 +1,393 @@
+/* Form Validation UI Styles */
+
+/* Input Field States */
+.form-group {
+  position: relative;
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--text-dark);
+  transition: color 0.3s ease;
+}
+
+/* Input States */
+input.valid,
+textarea.valid,
+select.valid {
+  border-color: #22c55e !important;
+  background-color: rgba(34, 197, 94, 0.05);
+}
+
+input.invalid,
+textarea.invalid,
+select.invalid {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05);
+  animation: shake 0.3s ease-in-out;
+}
+
+input.touched:not(:focus):invalid,
+input.touched:not(:focus)[data-invalid="true"] {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.05);
+}
+
+/* Shake animation for invalid fields */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+/* Validation Icons */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input,
+.input-wrapper textarea,
+.input-wrapper select {
+  flex: 1;
+  padding-right: 2.5rem;
+}
+
+.validation-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.validation-icon.show {
+  opacity: 1;
+}
+
+.validation-icon.valid {
+  color: #22c55e;
+}
+
+.validation-icon.invalid {
+  color: #ef4444;
+}
+
+/* Error Message */
+.error-text {
+  display: block;
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  padding-left: 0.25rem;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.3s ease;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.error-text.show {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 50px;
+}
+
+/* Success checkmark animation */
+.checkmark-circle {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #22c55e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.3s ease;
+}
+
+.checkmark-circle::after {
+  content: '✓';
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Password Strength Indicator */
+.password-strength {
+  margin-top: 0.5rem;
+}
+
+.strength-bar {
+  height: 4px;
+  background: #e5e7eb;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.strength-fill {
+  height: 100%;
+  transition: all 0.3s ease;
+  border-radius: 2px;
+}
+
+.strength-fill.weak {
+  width: 25%;
+  background: #ef4444;
+}
+
+.strength-fill.fair {
+  width: 50%;
+  background: #f59e0b;
+}
+
+.strength-fill.good {
+  width: 75%;
+  background: #3b82f6;
+}
+
+.strength-fill.strong {
+  width: 100%;
+  background: #22c55e;
+}
+
+.strength-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.strength-text.weak { color: #ef4444; }
+.strength-text.fair { color: #f59e0b; }
+.strength-text.good { color: #3b82f6; }
+.strength-text.strong { color: #22c55e; }
+
+/* Form Button Loading State */
+button.form-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+button.form-btn.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+button.form-btn.loading::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-left: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Phone Input Validation */
+input[type="tel"].valid + .validation-icon::before,
+input[name="phone"].valid + .validation-icon::before {
+  content: '📱';
+  font-size: 0.9rem;
+}
+
+/* Email Input Animation */
+input[type="email"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+input[type="email"].valid:focus {
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+input[type="email"].invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+}
+
+/* Floating Label Effect */
+.floating-label {
+  position: relative;
+}
+
+.floating-label input {
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+.floating-label label {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #9ca3af;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label {
+  top: 8px;
+  font-size: 0.75rem;
+  color: #3b82f6;
+}
+
+.floating-label input.valid:focus + label,
+.floating-label input.valid:not(:placeholder-shown) + label {
+  color: #22c55e;
+}
+
+.floating-label input.invalid:focus + label,
+.floating-label input.invalid:not(:placeholder-shown) + label {
+  color: #ef4444;
+}
+
+/* Required Field Indicator */
+label.required::after {
+  content: ' *';
+  color: #ef4444;
+}
+
+/* Character Counter */
+.char-counter {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.char-counter.warning {
+  color: #f59e0b;
+}
+
+.char-counter.limit {
+  color: #ef4444;
+}
+
+/* Tooltip for validation rules */
+.validation-tooltip {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%) translateX(100%);
+  background: #1f2937;
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  z-index: 100;
+}
+
+.validation-tooltip::before {
+  content: '';
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-right-color: #1f2937;
+}
+
+.input-wrapper:hover .validation-tooltip,
+.input-wrapper input:focus ~ .validation-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(calc(100% + 10px));
+}
+
+/* Enhanced Signup Password Requirements */
+.password-requirements {
+  background: #f9fafb;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  border: 1px solid #e5e7eb;
+}
+
+.password-requirements .requirement {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #6b7280;
+  padding: 0.25rem 0;
+  transition: all 0.3s ease;
+}
+
+.password-requirements .requirement i {
+  font-size: 6px;
+  transition: all 0.3s ease;
+}
+
+.password-requirements .requirement.met {
+  color: #22c55e;
+}
+
+.password-requirements .requirement.met i {
+  transform: scale(1.5);
+}
+
+/* Dark Mode Support */
+.dark-mode input.valid,
+.dark-mode textarea.valid,
+.dark-mode select.valid {
+  border-color: #22c55e !important;
+  background-color: rgba(34, 197, 94, 0.1);
+}
+
+.dark-mode input.invalid,
+.dark-mode textarea.invalid,
+.dark-mode select.invalid {
+  border-color: #ef4444 !important;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.dark-mode .password-requirements {
+  background: #374151;
+  border-color: #4b5563;
+}
+
+.dark-mode .password-requirements .requirement {
+  color: #9ca3af;
+}
+
+.dark-mode .strength-bar {
+  background: #4b5563;
+}
+
+.dark-mode .validation-tooltip {
+  background: #374151;
+}
+
+.dark-mode .validation-tooltip::before {
+  border-right-color: #374151;
+}

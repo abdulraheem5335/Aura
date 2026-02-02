@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
-import { SuccessPopup } from "../components/SuccessPopup";
+import { useToast } from "../context/ToastContext";
 import "../style/forgotPassword.css";
 
 export function ForgotPassword() {
@@ -9,10 +9,8 @@ export function ForgotPassword() {
   const [otp, setOtp] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [step, setStep] = useState(1);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
-  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const toast = useToast();
 
   const handleRequestOTP = async (e) => {
     e.preventDefault();
@@ -34,19 +32,14 @@ export function ForgotPassword() {
       console.log("Server response:", data);
 
       if (response.ok) {
-        setPopupMessage("OTP sent successfully!");
-        setIsError(false);
+        toast.success("OTP sent successfully!");
         setStep(2);
       } else {
-        setIsError(true);
-        setPopupMessage(data.message || "Failed to send OTP");
+        toast.error(data.message || "Failed to send OTP");
       }
     } catch (error) {
       console.error("Request error:", error);
-      setIsError(true);
-      setPopupMessage("Connection error. Please try again.");
-    } finally {
-      setShowPopup(true);
+      toast.error("Connection error. Please try again.");
     }
   };
 
@@ -61,18 +54,13 @@ export function ForgotPassword() {
 
       const data = await response.json();
       if (response.ok) {
-        setPopupMessage("Password reset successful!");
-        setIsError(false);
+        toast.success("Password reset successful!");
         setTimeout(() => navigate("/login"), 2000);
       } else {
-        setIsError(true);
-        setPopupMessage(data.message || "Invalid OTP");
+        toast.error(data.message || "Invalid OTP");
       }
-      setShowPopup(true);
     } catch (error) {
-      setIsError(true);
-      setPopupMessage("Failed to reset password");
-      setShowPopup(true);
+      toast.error("Failed to reset password");
     }
   };
 
@@ -114,12 +102,6 @@ export function ForgotPassword() {
           )}
         </div>
       </div>
-      <SuccessPopup
-        isOpen={showPopup}
-        onClose={() => setShowPopup(false)}
-        message={popupMessage}
-        isError={isError}
-      />
     </>
   );
 }

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
 import { useCart } from "../context/CartContext";
+import { ProductDetailsSkeleton } from "../components/SkeletonLoader";
 import "../style/productDetails.css";
+import "../style/skeleton.css";
 
 export function ProductDetails() {
   const { id } = useParams();
@@ -14,6 +16,7 @@ export function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [activeSection, setActiveSection] = useState(null);
+  const [addingToCart, setAddingToCart] = useState(false);
   const { addToCart } = useCart();
 
   // Helper function to get a valid product image
@@ -68,9 +71,7 @@ export function ProductDetails() {
     return (
       <>
         <Navbar />
-        <div className="loading-container">
-          <div className="loading">Loading...</div>
-        </div>
+        <ProductDetailsSkeleton />
       </>
     );
   }
@@ -157,12 +158,22 @@ export function ProductDetails() {
           </div>
 
           <button
-            className="add-to-cart-btn"
-            disabled={!selectedSize}
-            onClick={() => addToCart(product, selectedSize, quantity)}
-
+            className={`add-to-cart-btn ${addingToCart ? 'loading' : ''}`}
+            disabled={!selectedSize || addingToCart}
+            onClick={async () => {
+              setAddingToCart(true);
+              await addToCart(product, selectedSize, quantity);
+              setTimeout(() => setAddingToCart(false), 800);
+            }}
           >
-            Add to Cart
+            {addingToCart ? (
+              <span className="btn-loading">
+                <span className="btn-spinner"></span>
+                Adding...
+              </span>
+            ) : (
+              'Add to Cart'
+            )}
           </button>
 
           <div className="product-accordion">

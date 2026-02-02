@@ -1,8 +1,9 @@
 import "../style/login.css";
+import "../style/formValidation.css";
 import { Navbar } from "../components/Navbar";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { SuccessPopup } from "../components/SuccessPopup";
+import { useToast } from "../context/ToastContext";
 import API_URL from '../config/api';
 
 export function LogIn() {
@@ -11,19 +12,63 @@ export function LogIn() {
     password: "",
     rememberMe: false,
   });
-  const [LoggedIn, setLoggedIn] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
-  const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const toast = useToast();
+
+  // Validation functions
+  const validateEmail = (email) => {
+    if (!email) return "Email is required";
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return "Please enter a valid email address";
+    return null;
+  };
+
+  const validatePassword = (password) => {
+    if (!password) return "Password is required";
+    if (password.length < 6) return "Password must be at least 6 characters";
+    return null;
+  };
+
+  const validateField = useCallback((name, value) => {
+    switch (name) {
+      case 'email':
+        return validateEmail(value);
+      case 'password':
+        return validatePassword(value);
+      default:
+        return null;
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value;
+    
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: newValue,
     }));
+
+    // Validate on change if field has been touched
+    if (touched[name]) {
+      const error = validateField(name, newValue);
+      setErrors(prev => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const getInputClass = (fieldName) => {
+    if (!touched[fieldName]) return '';
+    return errors[fieldName] ? 'invalid' : 'valid';
   };
 
   const resetForm = () => {
@@ -32,10 +77,31 @@ export function LogIn() {
       password: "",
       rememberMe: false
     });
+    setErrors({});
+    setTouched({});
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Mark all fields as touched
+    setTouched({ email: true, password: true });
+    
+    // Validate all fields
+    const emailError = validateField('email', formData.email);
+    const passwordError = validateField('password', formData.password);
+    
+    setErrors({
+      email: emailError,
+      password: passwordError
+    });
+    
+    // If there are errors, don't submit
+    if (emailError || passwordError) {
+      toast.error('Please fix the form errors before submitting');
+      return;
+    }
+    
     setIsLoading(true);
 
     try {
@@ -45,18 +111,14 @@ export function LogIn() {
       const user = users.find(u => u.email.toLowerCase() === formData.email.toLowerCase());
 
       if (!user) {
-        setIsError(true);
-        setPopupMessage('User not found. Please check your email.');
-        setShowPopup(true);
-        resetForm(); // Clear fields on error
+        toast.error('User not found. Please check your email.');
+        resetForm();
         return;
       }
 
       if (user.password !== formData.password) {
-        setIsError(true);
-        setPopupMessage('Incorrect password. Please try again.');
-        setShowPopup(true);
-        setFormData(prev => ({ ...prev, password: "" })); // Only clear password on wrong password
+        toast.error('Incorrect password. Please try again.');
+        setFormData(prev => ({ ...prev, password: "" }));
         return;
       }
 
@@ -67,33 +129,19 @@ export function LogIn() {
         localStorage.setItem("userEmail", formData.email);
       }
       
-      setLoggedIn(true);
-      setIsError(false);
-      setPopupMessage('Login successful!');
-      setShowPopup(true);
-      resetForm(); // Clear all fields on success
+      toast.success('Login successful! Redirecting...');
+      resetForm();
       
       setTimeout(() => {
         navigate("/");
-      }, 1500); // Give time for popup to be seen
+      }, 1000);
 
     } catch (error) {
       console.error('Login error:', error);
-      setIsError(true);
-      setPopupMessage('An error occurred. Please try again.');
-      setShowPopup(true);
-      resetForm(); // Clear fields on error
+      toast.error('An error occurred. Please try again.');
+      resetForm();
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handlePopupClose = () => {
-    setShowPopup(false);
-    
-    // If login was successful, navigate to home after closing popup
-    if (LoggedIn && !isError) {
-      navigate("/");
     }
   };
 
@@ -108,22 +156,50 @@ export function LogIn() {
       <form className="login-form" onSubmit={handleSubmit}>
         <h1>AURA</h1>
         <h2>Welcome Back</h2>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email Address"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          placeholder="Password"
-          required
-        />
+        <div className="form-group">
+          <div className="input-wrapper">
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Email Address"
+              className={getInputClass('email')}
+              required
+            />
+            {touched.email && (
+              <span className={`validation-icon show ${errors.email ? 'invalid' : 'valid'}`}>
+                {errors.email ? '✕' : '✓'}
+              </span>
+            )}
+          </div>
+          {touched.email && errors.email && (
+            <span className="error-text show">{errors.email}</span>
+          )}
+        </div>
+        <div className="form-group">
+          <div className="input-wrapper">
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              placeholder="Password"
+              className={getInputClass('password')}
+              required
+            />
+            {touched.password && (
+              <span className={`validation-icon show ${errors.password ? 'invalid' : 'valid'}`}>
+                {errors.password ? '✕' : '✓'}
+              </span>
+            )}
+          </div>
+          {touched.password && errors.password && (
+            <span className="error-text show">{errors.password}</span>
+          )}
+        </div>
         <div className="remember-forgot">
           <div className="remember-me">
             <input
@@ -139,7 +215,7 @@ export function LogIn() {
             Forgot Password?
           </a>
         </div>
-        <button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading} className={isLoading ? 'loading' : ''}>
           {isLoading ? "Signing in..." : "Sign In"}
         </button>
         <p>Don't have an account?</p>
@@ -165,12 +241,6 @@ export function LogIn() {
           </button>
         </div>
       </form>
-      <SuccessPopup
-        isOpen={showPopup}
-        onClose={handlePopupClose}
-        message={popupMessage}
-        isError={isError}
-      />
     </>
   );
 }

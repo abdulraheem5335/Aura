@@ -1,0 +1,340 @@
+/* ==========================================
+   THEME TOGGLE BUTTON
+   ========================================== */
+
+.theme-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-track {
+  position: relative;
+  width: 56px;
+  height: 28px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggle-track.dark {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.toggle-track.light {
+  background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+}
+
+.toggle-icon {
+  font-size: 14px;
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
+
+.toggle-track.dark .sun {
+  opacity: 0.3;
+}
+
+.toggle-track.dark .moon {
+  opacity: 1;
+}
+
+.toggle-track.light .sun {
+  opacity: 1;
+}
+
+.toggle-track.light .moon {
+  opacity: 0.3;
+}
+
+.toggle-thumb {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  left: 3px;
+}
+
+.toggle-track.dark .toggle-thumb {
+  transform: translateX(28px);
+}
+
+.toggle-track.light .toggle-thumb {
+  transform: translateX(0);
+}
+
+/* ==========================================
+   DARK MODE CSS VARIABLES
+   ========================================== */
+
+:root {
+  /* Light mode (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e8e8e8;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --border-color: #ddd;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --card-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --navbar-bg: #000000;
+  --accent-color: #ff4444;
+  --accent-hover: #ff2222;
+}
+
+.dark-mode {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808080;
+  --border-color: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+  --card-bg: #1e1e1e;
+  --input-bg: #2d2d2d;
+  --navbar-bg: #0a0a0a;
+  --accent-color: #ff6b6b;
+  --accent-hover: #ff5555;
+}
+
+/* ==========================================
+   GLOBAL DARK MODE STYLES
+   ========================================== */
+
+.dark-mode body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Navbar dark mode */
+.dark-mode .navbar {
+  background-color: var(--navbar-bg);
+}
+
+/* Cards dark mode */
+.dark-mode .product-card,
+.dark-mode .team-card,
+.dark-mode .card-front,
+.dark-mode .card-back {
+  background-color: var(--card-bg) !important;
+  border-color: var(--border-color);
+}
+
+.dark-mode .product-info {
+  background-color: var(--card-bg) !important;
+}
+
+.dark-mode .product-image {
+  background-color: #2d2d2d;
+}
+
+.dark-mode .product-grid {
+  background-color: var(--bg-secondary);
+}
+
+.dark-mode .category-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .product-info h3,
+.dark-mode .product-info-details h1 {
+  color: var(--text-primary);
+}
+
+.dark-mode .product-code,
+.dark-mode .product-info p {
+  color: var(--text-secondary);
+}
+
+/* Form inputs dark mode */
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+  color: var(--text-muted);
+}
+
+/* Sections dark mode */
+.dark-mode .about,
+.dark-mode .collections,
+.dark-mode .sustain,
+.dark-mode .contact-wrapper {
+  background-color: var(--bg-secondary);
+}
+
+.dark-mode .about-title,
+.dark-mode .collections-title,
+.dark-mode .sustain-title,
+.dark-mode .team-title,
+.dark-mode .contact h1,
+.dark-mode .contact-info h1 {
+  color: var(--text-primary);
+}
+
+.dark-mode .about-description,
+.dark-mode .collections-description,
+.dark-mode .sustain-description,
+.dark-mode .contact p {
+  color: var(--text-secondary);
+}
+
+/* Category view dark mode */
+.dark-mode .category-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .category-title {
+  color: var(--text-primary);
+}
+
+/* Footer dark mode */
+.dark-mode .footer {
+  background-color: var(--navbar-bg);
+}
+
+/* Contact info dark mode */
+.dark-mode .contact-info {
+  background-color: var(--bg-tertiary);
+}
+
+.dark-mode .contact-info h2,
+.dark-mode .contact-info p {
+  color: var(--text-primary);
+}
+
+/* Login/Signup forms dark mode */
+.dark-mode .login-container,
+.dark-mode .signup-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .login-card,
+.dark-mode .signup-card {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 20px var(--shadow-color);
+}
+
+.dark-mode .login-card h2,
+.dark-mode .signup-card h2 {
+  color: var(--text-primary);
+}
+
+/* Profile page dark mode */
+.dark-mode .profile-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .profile-card {
+  background-color: var(--card-bg);
+}
+
+.dark-mode .profile-card h1,
+.dark-mode .profile-card h3 {
+  color: var(--text-primary);
+}
+
+.dark-mode .profile-card p {
+  color: var(--text-secondary);
+}
+
+/* Checkout page dark mode */
+.dark-mode .checkout-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .checkout-form,
+.dark-mode .order-summary {
+  background-color: var(--card-bg);
+}
+
+.dark-mode .checkout-form h2,
+.dark-mode .order-summary h2 {
+  color: var(--text-primary);
+}
+
+/* Cart sidebar dark mode */
+.dark-mode .cart-sidebar {
+  background-color: var(--card-bg);
+}
+
+.dark-mode .cart-sidebar h2 {
+  color: var(--text-primary);
+}
+
+.dark-mode .cart-item {
+  border-color: var(--border-color);
+}
+
+.dark-mode .cart-item h4 {
+  color: var(--text-primary);
+}
+
+.dark-mode .cart-item p {
+  color: var(--text-secondary);
+}
+
+/* Product details dark mode */
+.dark-mode .product-details-container {
+  background-color: var(--bg-primary);
+}
+
+.dark-mode .accordion-header {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+.dark-mode .accordion-content {
+  color: var(--text-secondary);
+}
+
+/* Scrollbar dark mode */
+.dark-mode ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* Transitions for smooth theme switching */
+body,
+.navbar,
+.product-card,
+.login-card,
+.signup-card,
+.profile-card,
+.cart-sidebar,
+input,
+textarea {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

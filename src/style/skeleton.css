@@ -1,0 +1,245 @@
+/* ===========================================
+   SKELETON LOADER STYLES
+   =========================================== */
+
+/* Base skeleton animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 25%,
+    #e0e0e0 50%,
+    #f0f0f0 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+/* ===========================================
+   PRODUCT CARD SKELETON
+   =========================================== */
+
+.product-card-skeleton {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.product-card-skeleton .skeleton-image {
+  width: 100%;
+  height: 280px;
+  border-radius: 0;
+}
+
+.product-card-skeleton .skeleton-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* ===========================================
+   PRODUCT DETAILS SKELETON
+   =========================================== */
+
+.product-details-skeleton {
+  display: flex;
+  padding: 2rem 5%;
+  gap: 4rem;
+  margin-top: 100px;
+}
+
+.skeleton-gallery {
+  flex: 1;
+  max-width: 600px;
+}
+
+.skeleton-main-image {
+  width: 100%;
+  height: 500px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.skeleton-thumbnails {
+  display: flex;
+  gap: 1rem;
+}
+
+.skeleton-thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+}
+
+.skeleton-info {
+  flex: 1;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.skeleton-sizes {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ===========================================
+   CATEGORY SKELETON
+   =========================================== */
+
+.category-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.skeleton-category-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 12px;
+}
+
+/* ===========================================
+   SPINNER
+   =========================================== */
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  border: 3px solid;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ===========================================
+   PAGE LOADER
+   =========================================== */
+
+.page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+}
+
+.page-loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.page-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #ff4444;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.page-loader-content p {
+  color: #333;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* ===========================================
+   LOADING CONTAINER
+   =========================================== */
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  margin-top: 80px;
+}
+
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.loading::before {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f0f0f0;
+  border-top-color: #ff4444;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* ===========================================
+   DARK THEME SKELETON (optional)
+   =========================================== */
+
+.dark .skeleton {
+  background: linear-gradient(
+    90deg,
+    #2a2a2a 25%,
+    #3a3a3a 50%,
+    #2a2a2a 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* ===========================================
+   RESPONSIVE ADJUSTMENTS
+   =========================================== */
+
+@media (max-width: 768px) {
+  .product-details-skeleton {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  .skeleton-gallery,
+  .skeleton-info {
+    max-width: 100%;
+  }
+
+  .skeleton-main-image {
+    height: 350px;
+  }
+}

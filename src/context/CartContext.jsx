@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useToast } from "./ToastContext";
 
 const CartContext = createContext();
 
@@ -7,6 +8,8 @@ export function useCart() {
 }
 
 export function CartProvider({ children }) {
+  const toast = useToast();
+  
   // Initialize cart from localStorage if available
   const [cartItems, setCartItems] = useState(() => {
     const savedCart = localStorage.getItem('cart');
@@ -21,7 +24,7 @@ export function CartProvider({ children }) {
 
   const addToCart = (product, size, quantity) => {
     if (!product || !size) {
-      console.error("Cannot add to cart: Missing product or size");
+      toast.error("Please select a size before adding to cart");
       return;
     }
 
@@ -41,6 +44,7 @@ export function CartProvider({ children }) {
       return [...prev, { product, size, quantity }];
     });
     
+    toast.success(`${product.title || 'Item'} added to cart!`);
     setIsCartOpen(true);
   };
 
@@ -53,6 +57,8 @@ export function CartProvider({ children }) {
     setCartItems(prev =>
       prev.filter(item => !(item.product._id === productId && item.size === size))
     );
+    
+    toast.info("Item removed from cart");
   };
 
   const updateQuantity = (productId, size, quantity) => {

@@ -1,15 +1,35 @@
+/* ==========================================
+   SUSTAINABILITY SECTION - Enhanced Design
+   ========================================== */
 .sustain {
-  padding: 80px 5%;
-  background-color: #fff;
+  padding: 100px 5%;
+  background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative elements */
+.sustain::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 70, 70, 0.06) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translateY(-50%);
 }
 
 .sustain-text {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Creates two equal columns */
-  gap: 3rem;
-  max-width: 1200px;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 4rem;
+  max-width: 1300px;
   margin: 0 auto;
-  align-items: start;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .sustain-content {
@@ -17,114 +37,168 @@
 }
 
 .sustain-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   position: relative;
-  color: #333;
-  display: block;
+  color: #1a1a2e;
+  display: inline-block;
+  letter-spacing: -1px;
+  line-height: 1.2;
 }
 
 .sustain-title::after {
   content: "";
   position: absolute;
-  bottom: -10px;
+  bottom: -15px;
   left: 0;
-  width: 60px;
-  height: 3px;
-  background-color: #ff4646;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff4646, #ff6b6b);
+  border-radius: 2px;
 }
 
 .sustain-description {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #666;
-  margin-top: 2rem;
+  font-size: 1.15rem;
+  line-height: 2;
+  color: #5a5a6e;
+  margin-top: 2.5rem;
 }
 
 .sustain-image {
   grid-column: 2 / 3;
   width: 100%;
   height: auto;
-  object-fit: contain;
-  margin-top: 2rem;
+  max-height: 500px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+  transition: all 0.5s ease;
 }
 
+.sustain-image:hover {
+  transform: scale(1.02) rotate(-1deg);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.2);
+}
+
+/* Sustainability Process List */
 .sustain-list {
-  max-width: 1200px;
-  margin: 4rem auto 0;
-  padding: 0 5%;
+  max-width: 1300px;
+  margin: 5rem auto 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .sustain-list-title {
   font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 3rem;
+  font-weight: 800;
+  margin-bottom: 3.5rem;
   position: relative;
-  color: #333;
+  color: #1a1a2e;
+  text-align: center;
+  letter-spacing: -0.5px;
+}
+
+.sustain-list-title::after {
+  content: "";
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff4646, #ff6b6b);
+  border-radius: 2px;
 }
 
 .sustain-list-items {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 1.5rem;
+  gap: 1.5rem 2rem;
   align-items: start;
-  margin-bottom: 2.5rem;
-  padding: 1rem;
-  transition: transform 0.3s ease;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .sustain-list-items:hover {
-  transform: translateX(10px);
+  transform: translateX(10px) translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  border-color: rgba(255, 70, 70, 0.2);
 }
 
 .bullet {
-  width: 80px;
-  height: 80px;
-  background-color: #ff4646;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  background: linear-gradient(135deg, #ff4646, #ff6b6b);
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  font-size: 2rem;
-  font-weight: bold;
+  font-size: 1.8rem;
+  font-weight: 800;
   grid-row: 1 / span 2;
+  box-shadow: 0 8px 25px rgba(255, 70, 70, 0.35);
+  transition: all 0.3s ease;
+}
+
+.sustain-list-items:hover .bullet {
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 12px 35px rgba(34, 197, 94, 0.45);
 }
 
 .sustain-list-items h2 {
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a1a2e;
   margin: 0;
   align-self: end;
 }
 
 .sustain-list-items p {
-  color: #666;
-  line-height: 1.6;
+  color: #5a5a6e;
+  line-height: 1.8;
   margin: 0.5rem 0 0;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   grid-column: 2;
 }
 
 /* Media Query for Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .sustain-text {
     grid-template-columns: 1fr;
+    gap: 3rem;
   }
 
   .sustain-content,
   .sustain-image {
     grid-column: 1 / -1;
   }
+  
+  .sustain-image {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .sustain {
+    padding: 80px 5%;
+  }
 
   .sustain-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 
   .sustain-description {
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.8;
   }
 
   .sustain-list-title {
@@ -132,20 +206,23 @@
   }
 
   .bullet {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
+    width: 55px;
+    height: 55px;
+    font-size: 1.4rem;
+    border-radius: 14px;
   }
 
   .sustain-list-items {
-    gap: 1rem;
+    gap: 1rem 1.5rem;
+    padding: 1.5rem;
   }
 
   .sustain-list-items h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
   }
 
   .sustain-list-items p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
+}
 }

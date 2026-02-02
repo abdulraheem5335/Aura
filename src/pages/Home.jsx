@@ -4,7 +4,9 @@ import { About } from "../components/About.jsx";
 import { Sustain } from "../components/Sustain.jsx";
 import { Contact } from "../components/Contact.jsx";
 import { Navbar } from "../components/Navbar.jsx";
+import { AnimatedSection } from "../components/AnimatedSection.jsx";
 import path from "../assets/hero1.jpg";
+
 export function Home() {
   return (
     <div style={{ overflow: "hidden", width: "100%" }}>
@@ -21,10 +23,21 @@ export function Home() {
         linktwo={"#about1"}
       ></Hero>
       
-      <Collections />
-      <About />
-      <Sustain />
-      <Contact />
+      <AnimatedSection animation="slide-up">
+        <Collections />
+      </AnimatedSection>
+      
+      <AnimatedSection animation="fade-in">
+        <About />
+      </AnimatedSection>
+      
+      <AnimatedSection animation="slide-up">
+        <Sustain />
+      </AnimatedSection>
+      
+      <AnimatedSection animation="fade-in">
+        <Contact />
+      </AnimatedSection>
     </div>
   );
 }

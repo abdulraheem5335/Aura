@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
+import { ProductGridSkeleton } from "../components/SkeletonLoader";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 import "../style/categoryview.css";
+import "../style/skeleton.css";
 
 export function CategoryView() {
   const { cname } = useParams();
@@ -9,6 +12,7 @@ export function CategoryView() {
   const [product, setproduct] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.2 });
 
   async function getdata() {
     try {
@@ -48,17 +52,6 @@ export function CategoryView() {
     return "https://via.placeholder.com/300x450?text=No+Image";
   };
 
-  if (loading) {
-    return (
-      <>
-        <Navbar />
-        <div className="loading-container">
-          <div className="loading">Loading products...</div>
-        </div>
-      </>
-    );
-  }
-
   if (error) {
     return (
       <>
@@ -74,15 +67,26 @@ export function CategoryView() {
     <>
       <Navbar />
       <div className="category-container">
-        <h2 className="category-title">{cname}</h2>
-        <div className="product-grid">
-          {product.length === 0 ? (
-            <div className="no-products">No products found in this category.</div>
-          ) : (
-            product.map((Item, index) => (
+        <h2 
+          ref={titleRef}
+          className={`category-title slide-up ${titleVisible ? 'visible' : ''}`}
+        >
+          {cname}
+        </h2>
+        {loading ? (
+          <ProductGridSkeleton count={8} />
+        ) : product.length === 0 ? (
+          <div className="no-products">No products found in this category.</div>
+        ) : (
+          <div className="product-grid">
+            {product.map((Item, index) => (
               <div className="product-card" key={index}>
                 <div className="product-image">
-                  <img src={getProductImage(Item)} alt={Item.title || "Product"} />
+                  <img 
+                    src={getProductImage(Item)} 
+                    alt={Item.title || "Product"} 
+                    onLoad={(e) => e.target.classList.add('loaded')}
+                  />
                 </div>
                 <div className="product-info">
                   <h3>{Item.title || `Product ${Item.product_id}`}</h3>
@@ -95,9 +99,9 @@ export function CategoryView() {
                   </button>
                 </div>
               </div>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );

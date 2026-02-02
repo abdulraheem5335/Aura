@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "../components/Navbar";
-import { SuccessPopup } from "../components/SuccessPopup";
+import { useToast } from "../context/ToastContext";
 import "../style/editProfile.css";
 
 export function EditProfile() {
   const navigate = useNavigate();
+  const toast = useToast();
   const [formData, setFormData] = useState({
     phone: "",
     street: "",
@@ -14,7 +15,6 @@ export function EditProfile() {
     postal_code: "",
     country: "Pakistan",
   });
-  const [showPopup, setShowPopup] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -86,17 +86,13 @@ export function EditProfile() {
 
       const data = await response.json();
       console.log('Update successful:', data);
-      setShowPopup(true);
+      toast.success("Profile updated successfully!");
+      setTimeout(() => navigate('/profile'), 1500);
 
     } catch (error) {
       console.error('Update error:', error);
-      alert(error.message || 'Failed to update profile');
+      toast.error(error.message || 'Failed to update profile');
     }
-  };
-
-  const handlePopupClose = () => {
-    setShowPopup(false);
-    navigate('/profile');
   };
 
   if (loading) {
@@ -198,12 +194,6 @@ export function EditProfile() {
           </form>
         </div>
       </div>
-
-      <SuccessPopup
-        isOpen={showPopup}
-        onClose={handlePopupClose}
-        message="Profile updated successfully!"
-      />
     </>
   );
 }

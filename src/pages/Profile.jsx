@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ConfirmDialog } from "../components/ConfirmDialog";
 import { Navbar } from "../components/Navbar";
-import { SuccessPopup } from "../components/SuccessPopup";
+import { useToast } from "../context/ToastContext";
 import "../style/profile.css";
 
 export function Profile() {
   const navigate = useNavigate();
+  const toast = useToast();
   // State for confirm dialog
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -16,9 +17,6 @@ export function Profile() {
   // Loading and error states for UI feedback
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // State for logout success message
-  const [showLogoutSuccess, setShowLogoutSuccess] = useState(false);
 
   // Function to fetch user data using ID from localStorage
   const fetchUserData = async () => {
@@ -74,14 +72,11 @@ export function Profile() {
     // Close dialog
     setDialogOpen(false);
     
-    // Show success message
-    setShowLogoutSuccess(true);
-  };
-
-  const handleLogoutSuccessClose = () => {
-    setShowLogoutSuccess(false);
-    // Redirect to login
-    navigate("/Login");
+    // Show success toast and redirect
+    toast.success("You have been successfully logged out");
+    setTimeout(() => {
+      navigate("/Login");
+    }, 1000);
   };
 
   // Function to go to admin dashboard
@@ -209,15 +204,6 @@ export function Profile() {
         onCancel={() => setDialogOpen(false)}
         onConfirm={confirmLogout}
       />
-      
-      {/* Success popup for logout */}
-      {showLogoutSuccess && (
-        <SuccessPopup
-          message="You have been successfully logged out"
-          onClose={handleLogoutSuccessClose}
-          isOpen={showLogoutSuccess}
-        />
-      )}
     </>
   );
 }

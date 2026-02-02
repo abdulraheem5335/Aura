@@ -1,8 +1,16 @@
 import "../style/contact.css";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+
 export function Contact() {
+  const [leftRef, leftVisible] = useScrollAnimation({ threshold: 0.1 });
+  const [rightRef, rightVisible] = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <div className="contact-wrapper" id="contact1">
-      <div className="contact-left">
+      <div 
+        ref={leftRef}
+        className={`contact-left slide-in-left ${leftVisible ? 'visible' : ''}`}
+      >
         <div className="contact">
           <h1>Get In Touch</h1>
           <p>
@@ -28,7 +36,11 @@ export function Contact() {
           <input type="submit" value="Send Message" />
         </form>
       </div>
-      <div className="contact-info">
+      <div 
+        ref={rightRef}
+        className={`contact-info slide-in-right ${rightVisible ? 'visible' : ''}`}
+        style={{ transitionDelay: '200ms' }}
+      >
         <h1>Contact Information</h1>
 
         <h2>Address</h2>

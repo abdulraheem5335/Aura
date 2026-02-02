@@ -1,12 +1,28 @@
 import sustain from "../assets/Sustain.png";
 import "../style/sustain.css";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
+
 export function Sustain() {
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [descRef, descVisible] = useScrollAnimation({ threshold: 0.1 });
+  const [imageRef, imageVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [listRef, listVisible] = useScrollAnimation({ threshold: 0.1 });
+
   return (
     <section className="sustain" id="sustain">
       <div className="sustain-text">
         <div className="sustain-content">
-          <h1 className="sustain-title">Our Commitment to Sustainability</h1>
-          <p className="sustain-description">
+          <h1 
+            ref={titleRef}
+            className={`sustain-title slide-up ${titleVisible ? 'visible' : ''}`}
+          >
+            Our Commitment to Sustainability
+          </h1>
+          <p 
+            ref={descRef}
+            className={`sustain-description fade-in ${descVisible ? 'visible' : ''}`}
+            style={{ transitionDelay: '200ms' }}
+          >
             At AURA, sustainability isn't just a buzzword; it's the foundation
             of our entire operation. We recognize the fashion industry's
             environmental impact and are committed to being part of the
@@ -29,9 +45,18 @@ export function Sustain() {
             well in the 21st century.
           </p>
         </div>
-        <img className="sustain-image" src={sustain} alt="Sustainability" />
+        <img 
+          ref={imageRef}
+          className={`sustain-image slide-in-right ${imageVisible ? 'visible' : ''}`}
+          src={sustain} 
+          alt="Sustainability" 
+          style={{ transitionDelay: '300ms' }}
+        />
       </div>
-      <div className="sustain-list">
+      <div 
+        ref={listRef}
+        className={`sustain-list stagger-container ${listVisible ? 'visible' : ''}`}
+      >
         <h2 className="sustain-list-title">Our Sustainable Process</h2>
         <div className="sustain-list-items">
           <div className="bullet">1</div>

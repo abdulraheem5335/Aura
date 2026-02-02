@@ -4,9 +4,16 @@ import raheem from "../assets/raheem.jpg";
 import ahmad from "../assets/ahmad.jpg";
 import meerab from "../assets/meerab.jpg";
 import taimoor from "../assets/taimoor.jpg";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 
 export function About() {
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [textRef, textVisible] = useScrollAnimation({ threshold: 0.1 });
+  const [imageRef, imageVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [teamTitleRef, teamTitleVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [teamGridRef, teamGridVisible] = useScrollAnimation({ threshold: 0.1 });
+
   const teamMembers = [
     {
       name: "Taimoor Safdar",
@@ -49,8 +56,17 @@ export function About() {
     <section className="about" id="about1">
       <div className="about-content">
         <div className="about-text">
-          <h1 className="about-title">About AURA</h1>
-          <p className="about-description">
+          <h1 
+            ref={titleRef}
+            className={`about-title slide-up ${titleVisible ? 'visible' : ''}`}
+          >
+            About AURA
+          </h1>
+          <p 
+            ref={textRef}
+            className={`about-description fade-in ${textVisible ? 'visible' : ''}`}
+            style={{ transitionDelay: '200ms' }}
+          >
             Founded in 2020, AURA emerged as a response to the growing need for
             fashion that balances style, sustainability, and substance. Our
             journey began with a simple vision: to create clothing that empowers
@@ -70,12 +86,26 @@ export function About() {
             allowing you to shine authentically in every setting and situation.
           </p>
         </div>
-        <img src={aura} alt="About AURA" className="aura-image" />
+        <img 
+          ref={imageRef}
+          src={aura} 
+          alt="About AURA" 
+          className={`aura-image slide-in-right ${imageVisible ? 'visible' : ''}`}
+          style={{ transitionDelay: '300ms' }}
+        />
       </div>
       
       <div className="team-section">
-        <h1 className="team-title">Development Team</h1>
-        <div className="team-grid">
+        <h1 
+          ref={teamTitleRef}
+          className={`team-title slide-up ${teamTitleVisible ? 'visible' : ''}`}
+        >
+          Development Team
+        </h1>
+        <div 
+          ref={teamGridRef}
+          className={`team-grid stagger-container ${teamGridVisible ? 'visible' : ''}`}
+        >
           {teamMembers.map((member, index) => (
             <div className="team-card" key={index}>
               <div className="card-inner">

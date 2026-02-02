@@ -5,9 +5,13 @@ import accessories from "../assets/accessories.jpg";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
+import { useScrollAnimation } from "../hooks/useScrollAnimation";
 
 export function Collections() {
   const [slider, setslider] = useState(0);
+  const [titleRef, titleVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [descRef, descVisible] = useScrollAnimation({ threshold: 0.2 });
+  const [sliderRef, sliderVisible] = useScrollAnimation({ threshold: 0.1 });
 
   const collections = [
     {
@@ -53,8 +57,17 @@ export function Collections() {
   return (
     <section id="collection" className="collections">
       <div className="collections-content">
-        <h1 className="collections-title">Featured Collections</h1>
-        <p className="collections-description">
+        <h1 
+          ref={titleRef}
+          className={`collections-title slide-up ${titleVisible ? 'visible' : ''}`}
+        >
+          Featured Collections
+        </h1>
+        <p 
+          ref={descRef}
+          className={`collections-description fade-in ${descVisible ? 'visible' : ''}`}
+          style={{ transitionDelay: '200ms' }}
+        >
           AURA represents the pinnacle of contemporary fashion, where innovative
           design meets exceptional craftsmanship. Our collections are
           meticulously created to push the boundaries of style while maintaining
@@ -65,7 +78,11 @@ export function Collections() {
           offering you fashion that looks good and feels good in every sense.
         </p>
       </div>
-      <div className="container">
+      <div 
+        ref={sliderRef}
+        className={`container scale-up ${sliderVisible ? 'visible' : ''}`}
+        style={{ transitionDelay: '300ms' }}
+      >
         <div className="slider-navigation">
           <button
             className="nav-btn prev"
@@ -89,7 +106,6 @@ export function Collections() {
               index === slider ? "active" : ""
             }`}
             key={collection.id}
-            style={{ transform: `translateX(${(index - slider) * 100}%)` }}
           >
             <img
               src={collection.image}

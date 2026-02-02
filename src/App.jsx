@@ -10,6 +10,8 @@ import { SignUp } from "./pages/Signup.jsx";
 import { WomenCollection } from "./pages/Womencollection.jsx";
 import { CartSidebar } from "./components/CartSidebar";
 import { Checkout } from "./pages/Checkout";
+import { FadeTransition } from "./components/PageTransition";
+import "./style/pageTransition.css";
 
 // Admin imports
 import { AdminDashboard } from "./pages/admin/Dashboard";
@@ -24,24 +26,26 @@ function LocationWrapper() {
   
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/Login" element={<LogIn />} />
-        <Route path="/Mencollection" element={<MenCollection />} />
-        <Route path="/Womencollection" element={<WomenCollection />} />
-        <Route path="/Signup" element={<SignUp />} />
-        <Route path="/Mencollection/:cname" element={<CategoryView />} />
-        <Route path="/Womencollection/:cname" element={<CategoryView />} />
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-        <Route path="/checkout" element={<Checkout />} />
-        
-        {/* Admin Routes */}
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/users" element={<AdminUsers />} />
-        <Route path="/admin/products" element={<AdminProducts />} />
-        <Route path="/admin/orders" element={<AdminOrders />} />
-      </Routes>
+      <FadeTransition>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<LogIn />} />
+          <Route path="/Mencollection" element={<MenCollection />} />
+          <Route path="/Womencollection" element={<WomenCollection />} />
+          <Route path="/Signup" element={<SignUp />} />
+          <Route path="/Mencollection/:cname" element={<CategoryView />} />
+          <Route path="/Womencollection/:cname" element={<CategoryView />} />
+          <Route path="/Profile" element={<Profile />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/checkout" element={<Checkout />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/orders" element={<AdminOrders />} />
+        </Routes>
+      </FadeTransition>
       
       <CartSidebar />
       

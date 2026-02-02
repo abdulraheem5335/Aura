@@ -1,85 +1,155 @@
+/* ==========================================
+   COLLECTIONS SECTION - Enhanced Design
+   ========================================== */
 .collections {
-  padding: 80px 5%;
-  background-color: #fff;
+  padding: 100px 5%;
+  background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+  position: relative;
+  overflow: hidden;
+  max-width: 100vw;
+}
+
+/* Decorative background elements */
+.collections::before {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(255, 70, 70, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
+}
+
+.collections::after {
+  content: '';
+  position: absolute;
+  bottom: -200px;
+  left: -200px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255, 70, 70, 0.03) 0%, transparent 70%);
+  border-radius: 50%;
+  z-index: 0;
 }
 
 .collections-content {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: left;
+  max-width: 900px;
+  margin: 0 auto 60px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .collections-title {
-  font-size: 2.5rem;
-  font-weight: bold;
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 1.5rem;
   position: relative;
-  color: #333;
+  color: #1a1a2e;
+  display: inline-block;
+  letter-spacing: -1px;
 }
 
 .collections-title::after {
   content: "";
   position: absolute;
-  bottom: -10px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background-color: #ff4646;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #ff4646, #ff6b6b);
+  border-radius: 2px;
 }
 
 .collections-description {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: #666;
-  margin-top: 2rem;
+  font-size: 1.15rem;
+  line-height: 1.9;
+  color: #5a5a6e;
+  margin-top: 2.5rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Container Styles */
-.container {
+.container,
+.collections-slider {
   position: relative;
   width: 100%;
-  height: 600px;
+  max-width: 100%;
+  height: 650px;
   margin-top: 50px;
+  z-index: 1;
+  overflow: hidden;
+  clip-path: inset(0);
 }
 
 /* Navigation Buttons */
-.prevdiv,
-.nextdiv {
+.slider-navigation {
   position: absolute;
+  width: 100%;
+  max-width: 100%;
   top: 50%;
+  left: 0;
   transform: translateY(-50%);
-  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 20;
+  pointer-events: none;
+  box-sizing: border-box;
 }
 
-.prevdiv {
-  left: 20px;
+.nav-btn {
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  color: #ff4646;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.nextdiv {
-  right: 20px;
+.nav-btn:hover {
+  background: linear-gradient(135deg, #ff4646, #ff6b6b);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(255, 70, 70, 0.35);
 }
 
-/* Enhanced Navigation Buttons */
+.nav-btn:active {
+  transform: scale(0.95);
+}
+
+/* Enhanced Navigation Buttons (legacy) */
 .prev,
 .next {
-  background: rgba(255, 255, 255, 0.9);
-  border: 2px solid rgba(255, 70, 70, 0.5);
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
   padding: 18px 28px;
   cursor: pointer;
   border-radius: 50%;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   color: #ff4646;
   font-size: 1.2rem;
 }
 
 .prev:hover,
 .next:hover {
-  background: #ff4646;
+  background: linear-gradient(135deg, #ff4646, #ff6b6b);
   color: white;
-  transform: scale(1.15) translateY(-2px);
-  box-shadow: 0 8px 20px rgba(255, 70, 70, 0.3);
-  border-color: #ff4646;
+  transform: scale(1.15);
+  box-shadow: 0 12px 40px rgba(255, 70, 70, 0.35);
 }
 
 .prev:active,
@@ -89,60 +159,129 @@
 
 .collection-container {
   position: absolute;
-  left: 20%;
-  width: 60%;
-  height: 90%;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  border-radius: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(70%, 900px);
+  max-width: calc(100% - 160px);
+  height: 100%;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
   overflow: hidden;
-  position: absolute;
   visibility: hidden;
   opacity: 0;
+  pointer-events: none;
 }
 
 .collection-container.active {
   z-index: 1;
   visibility: visible;
   opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) !important;
 }
 
 .collection-container:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transform: translateX(-50%) translateY(-10px);
+  box-shadow: 0 35px 70px rgba(0, 0, 0, 0.25);
 }
 
 .collection-container:hover .collection-image {
-  filter: brightness(0.8);
-  transform: scale(1.05);
+  filter: brightness(0.75);
+  transform: scale(1.08);
 }
 
 .collection-image {
   width: 100%;
   height: 100%;
-  object-fit: fill;
+  object-fit: cover;
   filter: brightness(0.7);
-  transition: all 0.5s ease;
+  transition: all 0.6s ease;
   transform-origin: center;
 }
 
 /* Enhanced Collection Heading Animation */
 .collection-container:hover .collection-heading {
-  transform: translate(-50%, -10px);
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transform: translate(-50%, -20px);
 }
 
 .collection-heading {
   position: absolute;
-  bottom: 40px;
+  bottom: 60px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
-  font-size: 2.5rem;
+  font-size: 2.8rem;
+  font-weight: 700;
   text-align: center;
   width: 100%;
   z-index: 2;
   transition: transform 0.4s ease;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.5px;
+}
+
+/* Shop Now Button */
+.collection-cta {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  transition: all 0.4s ease;
+  z-index: 3;
+}
+
+.collection-container:hover .collection-cta {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.collection-cta button {
+  background: linear-gradient(135deg, #ff4646, #ff6b6b);
+  color: white;
+  border: none;
+  padding: 14px 36px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 70, 70, 0.4);
+}
+
+.collection-cta button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(255, 70, 70, 0.5);
+}
+
+/* Pagination Dots */
+.pagination-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+  position: relative;
+  z-index: 10;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background: linear-gradient(135deg, #ff4646, #ff6b6b);
+  transform: scale(1.2);
+  box-shadow: 0 4px 15px rgba(255, 70, 70, 0.4);
+}
+
+.dot:hover {
+  background: #ff6b6b;
 }
 
 /* Call to Action Buttons */
@@ -388,9 +527,21 @@
   font-size: 24px;
 }
 
+@media (max-width: 1024px) {
+  .collection-container {
+    width: 80%;
+    max-width: calc(100% - 120px);
+  }
+
+  .nav-btn {
+    width: 50px;
+    height: 50px;
+  }
+}
+
 @media (max-width: 768px) {
   .collections {
-    padding: 40px 20px;
+    padding: 60px 15px;
   }
 
   .collections-title {
@@ -400,14 +551,31 @@
   .collections-description {
     font-size: 1rem;
     line-height: 1.6;
+    padding: 0 10px;
   }
 
   .container {
     height: 400px;
+    margin-top: 30px;
+  }
+
+  .collection-container {
+    width: 85%;
+    max-width: calc(100% - 100px);
   }
 
   .collection-heading {
     font-size: 1.8rem;
+    bottom: 40px;
+  }
+
+  .slider-navigation {
+    padding: 0 10px;
+  }
+
+  .nav-btn {
+    width: 45px;
+    height: 45px;
   }
 
   .prev,
@@ -419,5 +587,30 @@
   .viewlink {
     padding: 10px 20px;
     font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .collections {
+    padding: 40px 10px;
+  }
+
+  .container {
+    height: 350px;
+  }
+
+  .collection-container {
+    width: 90%;
+    max-width: calc(100% - 80px);
+  }
+
+  .collection-heading {
+    font-size: 1.5rem;
+    bottom: 30px;
+  }
+
+  .nav-btn {
+    width: 40px;
+    height: 40px;
   }
 }
