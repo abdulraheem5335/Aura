@@ -8,22 +8,22 @@ import { ProductDetails } from "./pages/ProductDetails.jsx";
 import { Profile } from "./pages/Profile.jsx";
 import { SignUp } from "./pages/Signup.jsx";
 import { WomenCollection } from "./pages/Womencollection.jsx";
-import { CartSidebar } from "./components/CartSidebar";
-import { Checkout } from "./pages/Checkout";
-import { FadeTransition } from "./components/PageTransition";
+import { CartSidebar } from "./components/CartSidebar.jsx";
+import { Checkout } from "./pages/Checkout.jsx";
+import { FadeTransition } from "./components/PageTransition.jsx";
 import "./style/pageTransition.css";
 
 // Admin imports
-import { AdminDashboard } from "./pages/admin/Dashboard";
-import { AdminUsers } from "./pages/admin/Users";
-import { AdminProducts } from "./pages/admin/Products";
-import { AdminOrders } from "./pages/admin/Orders";
+import { AdminDashboard } from "./pages/admin/Dashboard.jsx";
+import { AdminUsers } from "./pages/admin/Users.jsx";
+import { AdminProducts } from "./pages/admin/Products.jsx";
+import { AdminOrders } from "./pages/admin/Orders.jsx";
 
 // LocationWrapper is needed since useLocation can't be used directly in App
 function LocationWrapper() {
   const location = useLocation();
   const isAdminPage = location.pathname.startsWith('/admin');
-  
+
   return (
     <>
       <FadeTransition>
@@ -38,7 +38,7 @@ function LocationWrapper() {
           <Route path="/Profile" element={<Profile />} />
           <Route path="/product/:id" element={<ProductDetails />} />
           <Route path="/checkout" element={<Checkout />} />
-          
+
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/users" element={<AdminUsers />} />
@@ -46,9 +46,9 @@ function LocationWrapper() {
           <Route path="/admin/orders" element={<AdminOrders />} />
         </Routes>
       </FadeTransition>
-      
+
       <CartSidebar />
-      
+
       {/* Only show footer on non-admin pages */}
       {!isAdminPage && <Footer />}
     </>

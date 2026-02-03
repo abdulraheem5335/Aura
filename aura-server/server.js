@@ -2,12 +2,12 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
-import categoryRoutes from "./src/routes/categoryRoutes.js";
-import productRoutes from "./src/routes/productRoutes.js";
-import userRoutes from "./src/routes/userRoutes.js";
-import cartRoutes from "./src/routes/cartRoutes.js";
-import orderRoutes from "./src/routes/orderRoutes.js";
-import reviewRoutes from "./src/routes/reviewRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import cartRoutes from "./routes/cartRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import reviewRoutes from "./routes/reviewRoutes.js";
 
 dotenv.config();
 
@@ -31,10 +31,14 @@ app.use(
 app.use(express.json());
 
 // MongoDB connection
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.log("MongoDB connection error:", err));
+if (process.env.MONGODB_URI) {
+  mongoose
+    .connect(process.env.MONGODB_URI)
+    .then(() => console.log("MongoDB connected successfully"))
+    .catch((err) => console.log("MongoDB connection error:", err));
+} else {
+  console.log("MONGODB_URI is not defined. Skipping database connection.");
+}
 
 // Routes
 app.use("/api/categories", categoryRoutes);
