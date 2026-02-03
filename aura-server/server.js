@@ -33,8 +33,8 @@ app.use(
 // Middleware
 app.use(express.json());
 
-// MongoDB connection
-const connectDB = async () => {
+// Connect to database (exported for serverless use)
+export const connectDB = async () => {
   if (mongoose.connections[0].readyState) {
     return;
   }
@@ -49,9 +49,6 @@ const connectDB = async () => {
     console.error("MongoDB connection error:", error);
   }
 };
-
-// Connect to database
-connectDB();
 
 // Routes
 app.use("/api/categories", categoryRoutes);
@@ -72,8 +69,9 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: "Something went wrong!" });
 });
 
-// Start server
+// Start server (only in local/dev mode)
 if (process.env.NODE_ENV !== 'production') {
+  connectDB();
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
