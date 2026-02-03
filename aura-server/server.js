@@ -15,14 +15,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Updated CORS configuration for Netlify
+// Updated CORS configuration for Vercel
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
       "http://localhost:3000",
-      "https://aura-store.netlify.app", // Update with your Netlify domain
+      "https://aura-clothings.vercel.app",
+      "https://aura-server.vercel.app",
+      "https://aura-xw3u.vercel.app"
     ],
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     credentials: true,
   })
 );
@@ -31,14 +34,24 @@ app.use(
 app.use(express.json());
 
 // MongoDB connection
-if (process.env.MONGODB_URI) {
-  mongoose
-    .connect(process.env.MONGODB_URI)
-    .then(() => console.log("MongoDB connected successfully"))
-    .catch((err) => console.log("MongoDB connection error:", err));
-} else {
-  console.log("MONGODB_URI is not defined. Skipping database connection.");
-}
+const connectDB = async () => {
+  if (mongoose.connections[0].readyState) {
+    return;
+  }
+  try {
+    if (!process.env.MONGODB_URI) {
+      console.warn("MONGODB_URI is not defined");
+      return;
+    }
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("MongoDB connected successfully");
+  } catch (error) {
+    console.error("MongoDB connection error:", error);
+  }
+};
+
+// Connect to database
+connectDB();
 
 // Routes
 app.use("/api/categories", categoryRoutes);
